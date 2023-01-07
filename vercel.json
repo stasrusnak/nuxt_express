@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "routes": [
+    {
+      "src": "/api/users",
+      "dest": "/api/users.js"
+    }
+  ],
   "builds": [
     {
       "src": "nuxt.config.js",
@@ -8,15 +14,6 @@
         "serverFiles": ["api/**"]
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/users",
-      "dest": "/api/users.js"
-    },
-    {
-      "src": "/api/test",
-      "dest": "/api/test.js"
-    }
   ]
+
 }
