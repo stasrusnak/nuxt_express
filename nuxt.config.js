@@ -61,7 +61,7 @@ export default {
     '/api': '~/api'
   },
 
-  /** For deployment you might want to edit host and port
+  /* For deployment you might want to edit host and port
   */
   // server: {
   //  port: 8000, // default: 3000
