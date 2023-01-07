@@ -57,12 +57,12 @@ export default {
   /*
   ** Server Middleware
   */
-  serverMiddleware:
-    process.env.NODE_ENV === 'production'
-      ? []
-      : [
-          {path: '/api', handler: '~/api/index'},
-      ],
+  // serverMiddleware:
+  //   process.env.NODE_ENV === 'production'
+  //     ? []
+  //     : [
+  //         {path: '/api', handler: '~/api/index'},
+  //     ],
   /*
   ** For deployment you might want to edit host and port
   */
