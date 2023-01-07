@@ -8,15 +8,5 @@
         "serverFiles": ["api/**"]
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/users",
-      "dest": "/api/users.js"
-    },
-    {
-      "src": "/api/test",
-      "dest": "/api/test.js"
-    }
   ]
 }
