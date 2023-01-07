@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" }
+  ],
   "builds": [
     {
       "src": "nuxt.config.js",
@@ -7,6 +10,10 @@
       "config": {
         "serverFiles": ["api/**"]
       }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ]
 }
