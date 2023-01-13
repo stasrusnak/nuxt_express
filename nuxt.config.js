@@ -24,13 +24,17 @@ export default {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+  ],
 
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
-  plugins: [],
+  plugins: [
+    '~/plugins/global',
+    '~/plugins/axios.js'
+  ],
 
   /*
   ** Auto import components

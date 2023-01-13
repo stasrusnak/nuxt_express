@@ -14,9 +14,11 @@
     "node": ">=16.0.0 <17.0.0"
   },
   "dependencies": {
+    "@andresouzaabreu/vue-data-table": "^3.3.3",
     "@nuxt/http": "latest",
     "@nuxtjs/dotenv": "^1.4.1",
     "express": "latest",
+    "mongodb": "^3.6.9",
     "nuxt": "^2.15.7"
   },
   "devDependencies": {
@@ -25,6 +27,8 @@
     "@nuxtjs/vercel-builder": "^0.24.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.20.0",
-    "eslint-plugin-nuxt": "^2.0.0"
+    "eslint-plugin-nuxt": "^2.0.0",
+    "sass": "^1.57.1",
+    "sass-loader": "^10"
   }
 }
