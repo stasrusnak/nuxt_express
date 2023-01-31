@@ -7,11 +7,13 @@ const app = express()
 const users = require('./routes/users')
 const test = require('./routes/test')
 const posts = require('./routes/posts')
+const menu = require('./routes/menu')
 
 // Import API Routes
 app.use(users)
 app.use(test)
 app.use(posts)
+app.use(menu)
 
 // Export express app
 module.exports = app

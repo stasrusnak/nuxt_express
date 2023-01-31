@@ -24,7 +24,7 @@
 <script>
 export default {
   async asyncData ({ $http }) {
-    const data = await $http.$get('/api/users')
+    const data = await $http.$get('/api/menu')
     return { users: data }
   },
   head () {
