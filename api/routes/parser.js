@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const fs = require("fs");
 const path = require('path');
-const config = require('../config.json')
+const config = process.env.API_TOKEN
 const mongoose = require('mongoose');
 const maps = require('../models/map.model');
 
@@ -49,7 +49,7 @@ function getTime(minutes){
 function startPars(datePars,work){
   mongoose.set('strictQuery', false)
 
-  mongoose.connect(config.mongo_url, {
+  mongoose.connect(config, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 
