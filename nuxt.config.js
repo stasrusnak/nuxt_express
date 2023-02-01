@@ -69,7 +69,8 @@ export default async () => {
     */
     plugins: [
       '~/plugins/global',
-      '~/plugins/axios.js'
+      '~/plugins/axios.js',
+      { src: '~/plugins/vue-datepicker', ssr: false },
     ],
 
     /*

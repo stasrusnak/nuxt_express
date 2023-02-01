@@ -23,7 +23,8 @@
     "nuxt": "^2.15.7",
     "nuxt-basic-auth-module": "^1.4.1",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-vue": "^0.11.0"
+    "semantic-ui-vue": "^0.11.0",
+    "vue2-datepicker": "^3.11.1"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^2.1.1",

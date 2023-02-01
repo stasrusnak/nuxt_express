@@ -5,8 +5,8 @@ import 'semantic-ui-css/semantic.min.css';
 import SuiVue from 'semantic-ui-vue';
 
 
-Vue.component("data-table", DataTable);
 Vue.use(SuiVue);
+Vue.component("data-table", DataTable);
 
 
   // let E_THEME

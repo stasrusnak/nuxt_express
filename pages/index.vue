@@ -1,25 +1,40 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo/>
-      <h1 class="title">
-        nuxt-express
-      </h1>
-      <div>
-        <div class="links">
-          <a
-            href="/users"
-            class="button--green"
-          >
-            Users List
-          </a>
-        </div>
-      </div>
-      <div>
-          <data-table v-bind="parameters"/>
+  <div>
+<!--    <div>-->
+<!--      <Logo/>-->
+<!--      <h1 class="title">-->
+<!--        nuxt-express-->
+<!--      </h1>-->
+<!--      <div>-->
+<!--        <div class="links">-->
+<!--          <a-->
+<!--            href="/users"-->
+<!--            class="button&#45;&#45;green"-->
+<!--          >-->
+<!--            Users List-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+    <sui-menu inverted class="main-menu">
+      <sui-menu-item>
+        <a class="button" href="https://irinabot.ru/">
+          IrInA Host B
+          <sui-icon name="circle" style="margin: 0"/>
+          T
+        </a>
+
+      </sui-menu-item>
+    </sui-menu>
+
+    <div class="container">
+      <div >
+        <data-table v-bind="parameters"/>
       </div>
     </div>
-  </div>
+
+
+    </div>
+
 </template>
 
 <script>
