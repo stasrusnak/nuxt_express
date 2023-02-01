@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 export default async () => {
 
   let body = {
@@ -57,7 +58,10 @@ export default async () => {
     /*
     ** Global CSS
     */
-    css: [],
+    css: [
+      '@/assets/main.scss'
+    ],
+
 
     /*
     ** Plugins to load before mounting the App
@@ -88,7 +92,9 @@ export default async () => {
     modules: [
       // Doc: https://http.nuxtjs.org
       '@nuxt/http',
-      'nuxt-basic-auth-module'
+      'nuxt-basic-auth-module',
+      'semantic-ui-vue/nuxt',
+      '@nuxtjs/color-mode'
     ],
 
     /*
@@ -118,6 +124,7 @@ export default async () => {
     ** See https://nuxtjs.org/api/configuration-build/
     */
     build: {}
+
   };
 
 

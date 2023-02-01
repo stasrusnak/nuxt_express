@@ -1,66 +1,69 @@
 <template>
-  <section class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        USERS
-      </h1>
-      <ul class="users">
-        <li v-for="(user, index) in users" :key="index" class="user">
-          <nuxt-link :to="{ name: 'users-id', params: { id: index }}">
-            {{ user.name }}
-          </nuxt-link>
-        </li>
-      </ul>
-      <nuxt-link class="button" to="/">
-        Homepage
-      </nuxt-link>
+  <div>
+    <sui-menu inverted class="main-menu">
 
-      <button onclick="auth(false)">auth</button>
-    </div>
-  </section>
+      <sui-menu-item as={NavLink} to="/" color="black">
+        IrInA Host B
+        <sui-icon name="circle" style="margin: 0"/>
+        T
+      </sui-menu-item>
+      <a
+        is="sui-menu-item"
+        v-for="item in items"
+        :active="isActive(item)"
+        :key="item"
+        :content="item"
+        @click="select(item)"
+      />
+
+<!--      <sui-button basic color="green" @click="theme()">Black</sui-button>-->
+
+    </sui-menu>
+
+    <sui-segment>
+      <docs-wireframe name="paragraph"/>
+    </sui-segment>
+  </div>
 </template>
 
 <script>
-export default {
-  async asyncData ({ $http }) {
-    const data = await $http.$get('/api/menu')
-    return { users: data }
-  },
-  head () {
-    return {
-      title: 'Users'
-    }
-  }
-}
+  import { switchTheme, E_THEME, currentTheme } from "../../assets/Theme";
+
+
+  export default {
+    name: 'PointingMenuExample',
+    data() {
+      return {
+        active: 'Home',
+        items: ['Home', 'Messages', 'Friends'],
+      };
+    },
+    methods: {
+
+
+      // theme(){
+      //   console.log( this.$colorMode)
+      //     this.$colorMode.preference = 'dark'
+      //     switchTheme(
+      //       currentTheme === E_THEME.LIGHT ? E_THEME.DARK : E_THEME.LIGHT,
+      //        $colorMode
+      //     );
+      // },
+      //
+      isActive(name) {
+        return this.active === name;
+      },
+      select(name) {
+        this.active = name;
+      },
+    },
+  };
 </script>
 
-<style scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.title
-{
-  margin: 30px 0;
-}
-.users
-{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.user
-{
-  margin: 10px 0;
-}
-.button
-{
-  display: inline-block;
-  margin-top: 50px;
-}
+
+<style lang="scss">
+  .main-menu {
+    border-radius: 0px !important;
+  }
+
 </style>

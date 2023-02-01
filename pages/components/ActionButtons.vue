@@ -2,7 +2,7 @@
     <div class="action-buttons">
 
         <button class="btn btn-outline-success" @click="handleAction(data)">
-            <i class="fa fa-eye"></i>
+            <sui-icon name="users" bordered />
         </button>
     </div>
 </template>

@@ -1,0 +1,53 @@
+
+$red            : #B03060;
+$orange         : #FE9A76;
+$yellow         : #FFD700;
+$olive          : #32CD32;
+$green          : #016936;
+$green          : #016936;
+$teal           : #008080;
+$blue           : #0E6EB8;
+$violet         : #EE82EE;
+$purple         : #B413EC;
+$pink           : #FF1493;
+$brown          : #A52A2A;
+$grey           : #A0A0A0;
+$black          : #000000;
+
+$primaryColor   : $pink;
+$secondaryColor : $grey;
+
+
+
+:root {
+  --color: #ebf4f1;
+  --color-primary: #41b38a;
+  --color-secondary: #fdf9f3;
+  --bg: #253444;
+  --bg-secondary: #071521;
+  --border-color: #0d2538;
+  --bg-p: #071521;
+  --bg-nav: #2f495e;
+  --border-bottom: none;
+  //button
+  --btn: #071521ad;
+  //admin-side
+  --admin-side: #2f495e
+}
+
+.dark-mode {
+  --color: #243746;
+  --color-primary: #158876;
+  --color-secondary: #0e2233;
+  --bg: #fff;
+  --bg-secondary: #fff;
+  --border-color: #fff;
+  --bg-nav: #fff;
+  //text
+  --bg-p: #071521;
+  --border-bottom: 1px solid #e6e6e6;
+  //button
+  --btn: #DCDFE6;
+  //admin-side
+  --admin-side: rgb(217, 236, 255);
+}
