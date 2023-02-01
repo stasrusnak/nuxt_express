@@ -69,6 +69,8 @@
 
 <script>
   import ru from 'vue2-datepicker/locale/ru';
+  import axios from "axios";
+
   export default {
     name: 'PointingMenuExample',
     data() {
@@ -93,7 +95,7 @@
         //   );
       },
 
-      setDate() {
+      async setDate() {
 
         if (this.date_today !== null) {
           if (!this.isActive) {
@@ -104,6 +106,20 @@
             this.content = 'Pause'
           }
           this.isActive = !this.isActive
+
+
+          await axios({
+            method: 'post',
+            url: '/api/parser',
+            data: {
+              "date": this.date_today,
+            }
+          }).then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         }
 
       }
