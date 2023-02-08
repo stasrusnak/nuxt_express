@@ -88,3 +88,8 @@ sw.*
 
 # Vim swap files
 *.swp
+
+
+/api/src/site/site.html
+.api/src/site/site.html
+api/src/site/site.html

@@ -25,8 +25,88 @@
 
       <!--      <sui-button basic color="green" @click="theme()">Black</sui-button>-->
 
+
+
+
     </sui-menu>
     <sui-grid class="grid_main">
+      <sui-grid-row>
+        <sui-grid-column :width="3">
+        </sui-grid-column>
+        <sui-grid-column :width="10">
+
+          <sui-grid column :width="15">
+
+            <client-only>
+              <date-picker placeholder="Год-месяц-день"
+                           format='YYYY-MM-DD'
+                           valueType="format"
+                           v-model="date_today"
+                           :lang="lang"
+                           @change="theme"
+              />
+            </client-only>
+
+            <sui-button
+              compact
+              :disabled="!date_today"
+              :icon="icon"
+              label-position="left"
+              toggle
+              content="Парсинг карт"
+              :active="isActive"
+              @click="setDate()"
+            />
+
+            <sui-button
+              compact
+              :icon="'pause'"
+              label-position="left"
+              content="Стоп"
+              toggle
+              :active="isActive"
+              @click="setWork()"
+            />
+
+            <sui-button  @click="getLogs()" primary>Logs</sui-button>
+          </sui-grid>
+
+
+
+        </sui-grid-column>
+        <sui-grid-column :width="3">
+        </sui-grid-column>
+      </sui-grid-row>
+      <sui-grid-row>
+        <sui-grid-column :width="3">
+        </sui-grid-column>
+        <sui-grid-column :width="10">
+
+          <sui-grid column :width="15">
+            <div style=" height:500px;overflow-y: scroll;" v-show="this.logs" >
+            <sui-table striped  >
+              <sui-table-header>
+                <sui-table-row>
+                  <sui-table-header-cell>Logs</sui-table-header-cell>
+                </sui-table-row>
+              </sui-table-header>
+              <sui-table-body>
+                <sui-table-row vertical-align="top" v-for="(log, key) in this.logs" :key="key">
+                  <sui-table-cell>{{log}}</sui-table-cell>
+                </sui-table-row>
+              </sui-table-body>
+            </sui-table>
+            </div>
+          </sui-grid>
+
+
+
+
+        </sui-grid-column>
+        <sui-grid-column :width="3">
+        </sui-grid-column>
+      </sui-grid-row>
+
       <sui-grid-row>
         <sui-grid-column :width="3">
         </sui-grid-column>
@@ -65,8 +145,9 @@
               @click="setWork()"
             />
 
-
+            <sui-button  @click="getLogs()" primary>Logs</sui-button>
           </sui-grid>
+
 
 
         </sui-grid-column>
@@ -89,6 +170,7 @@
       return {
         icon: 'play',
         content: 'Play',
+        logs: null,
         isActive: true,
         lang: ru,
         date_today: null,
@@ -123,6 +205,25 @@
         //     currentTheme === E_THEME.LIGHT ? E_THEME.DARK : E_THEME.LIGHT,
         //      $colorMode
         //   );
+      },
+
+      async getLogs(){
+        let logs
+        await axios({
+          method: 'post',
+          url: '/api/parser/logs'
+        }).then(function (response) {
+           logs  = response.data
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        console.log(' this.logs  ')
+        console.log(logs)
+
+        this.logs = logs
+
       },
 
       async setDate() {

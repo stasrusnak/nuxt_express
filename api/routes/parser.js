@@ -45,6 +45,9 @@ function getTime(minutes){
 // let datePars = '2023-01-10'
 // let datePars = new Date().toJSON().slice(0, 10);
 
+
+let logs = []
+
 let work = false
 
 function startPars(datePars,iswork){
@@ -63,26 +66,33 @@ function startPars(datePars,iswork){
       if(iswork) work = iswork
 
       do {
+
+
+
         if(getReplays()){
           let linkBase = getLinks(datePars)
 
           for (const item of linkBase) {
-
+            if (logs.length > 10) logs = logs.slice(-10)
             console.log(item)
+            logs.push(item);
             let  resp = await maps.findOne({ idrep: item.idrep,
               time: item.time});
             if (!resp) {
               let Maps = new maps(item)
               await Maps.save()
               console.log("save new rep link :"+ item.idrep);
+              logs.push("save new rep link :"+ item.idrep);
             }
             if(!work) break;
             await wait(500);
           }
           console.log("done save links");
+          logs.push("done save links");
         }
 
         console.log('New work')
+        logs.push('New work')
         await wait(50000)
       }while (work)
 
@@ -153,21 +163,25 @@ router.post("/parser", async (req, res) => {
    // console.log(req.body.date )
   startPars(req.body.date,true)
 
-  res.status(201).send('dadadd');
+  res.status(201).send('start work');
 });
 
 router.post("/parser/stop", async (req, res) => {
 
-
   console.log(req.body.work)
   work = req.body.work
-
   res.status(201).send('stop work');
 });
 
 router.post("/parser/status", async (req, res) => {
   res.status(201).send(work);
 });
+
+
+router.post("/parser/logs", async (req, res) => {
+  res.status(201).send(logs);
+});
+
 
 
 
