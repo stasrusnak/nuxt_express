@@ -46,10 +46,11 @@
 
             <sui-button
               compact
+              :disabled="!date_today"
               :icon="icon"
               label-position="left"
-              :content="content"
               toggle
+              content="Парсинг карт"
               :active="isActive"
               @click="setDate()"
             />
@@ -58,7 +59,7 @@
               compact
               :icon="icon"
               label-position="left"
-              :content="content"
+              content="Стоп"
               toggle
               :active="isActive"
               @click="setWork()"
@@ -169,6 +170,22 @@
             .catch(function (error) {
               console.log(error);
             });
+
+            let status
+            await axios({
+              method: 'post',
+              url: '/api/parser/status'
+            }).then(function (response) {
+              status = response.data
+            })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+            console.log('status')
+            console.log(status)
+
+            this.isActive = status
 
       }
     },
