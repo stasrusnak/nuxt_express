@@ -16,7 +16,6 @@
         Homepage
       </nuxt-link>
 
-      <button onclick="auth(false)">auth</button>
     </div>
   </section>
 </template>

@@ -54,7 +54,7 @@
         return {
           data: this.posts,
           error: "",
-          lang: "pt-br",
+          lang: "en",
           actionMode: "single",
           columns: [
             {
@@ -103,7 +103,20 @@
               component: ActionButtons,
               sortable: false
             }
-          ]
+          ],
+          text: {
+            searchText:"Поиск",
+            perPageText:"Количество :entries",
+            infoText: "Отображение :first - :last из :total пользователей",
+            emptyTableText: "Пользователи не найдены :(",
+            infoFilteredText: "Показаны :first - :last из :filtered (отфильтровано из :total записей)",
+            nextButtonText: "След.",
+            previousButtonText: "Пред.",
+            paginationSearchText: "Перейти на страницу",
+            paginationSearchButtonText: "Ок",
+            downloadText: "Экспортировать как:",
+            downloadButtonText: "Загрузить",
+          }
         };
       }
     },
@@ -117,5 +130,8 @@
   }
 </script>
 
-<style src="../assets/index.scss" lang="scss"></style>
+<style src="../assets/index.scss" lang="scss">
+
+
+</style>
 
