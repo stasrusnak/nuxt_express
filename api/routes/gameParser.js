@@ -33,6 +33,16 @@ var matches = [];
 
 let state = {};
 
+// TODO make API
+
+const { Router } = require('express')
+
+
+const router = Router()
+
+let logs = []
+let work = false
+
 // let state = {
 //   "playerToName": {
 //     "0": "-HakypuJlo-",
@@ -411,5 +421,32 @@ function getStats(file) {
 
   return state
 }
+
+
+
+router.post("/parser", async (req, res) => {
+  // console.log(req.body.date )
+  startPars(req.body.date,true)
+
+  res.status(201).send('start work');
+});
+
+router.post("/parser/stop", async (req, res) => {
+
+  console.log(req.body.work)
+  work = req.body.work
+  res.status(201).send('stop work');
+});
+
+router.post("/parser/status", async (req, res) => {
+  res.status(201).send(work);
+});
+
+
+router.post("/parser/logs", async (req, res) => {
+  res.status(201).send(logs);
+});
+
+
 
 

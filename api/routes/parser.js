@@ -66,9 +66,6 @@ function startPars(datePars,iswork){
       if(iswork) work = iswork
 
       do {
-
-
-
         if(getReplays()){
           let linkBase = getLinks(datePars)
 
@@ -158,8 +155,6 @@ function startPars(datePars,iswork){
 }
 
 router.post("/parser", async (req, res) => {
-
-
    // console.log(req.body.date )
   startPars(req.body.date,true)
 
