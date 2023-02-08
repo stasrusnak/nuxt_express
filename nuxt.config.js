@@ -109,8 +109,8 @@ export default async () => {
     basic: {
       name: data.name,
       pass: data.pass,
-      match: '/users',
-      enabled: true  // require boolean value(nullable)
+      match: '/menu',
+      enabled: true // require boolean value(nullable)
     },
 
     /* For deployment you might want to edit host and port

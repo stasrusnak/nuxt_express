@@ -45,8 +45,9 @@ function getTime(minutes){
 // let datePars = '2023-01-10'
 // let datePars = new Date().toJSON().slice(0, 10);
 
+let work = false
 
-function startPars(datePars,work){
+function startPars(datePars,iswork){
   mongoose.set('strictQuery', false)
 
   mongoose.connect(config, {
@@ -58,6 +59,8 @@ function startPars(datePars,work){
       console.log('mongodb connected!')
 
       console.log(datePars)
+
+      if(iswork) work = iswork
 
       do {
         if(getReplays()){
@@ -73,6 +76,7 @@ function startPars(datePars,work){
               await Maps.save()
               console.log("save new rep link :"+ item.idrep);
             }
+            if(!work) break;
             await wait(500);
           }
           console.log("done save links");
@@ -146,11 +150,24 @@ function startPars(datePars,work){
 router.post("/parser", async (req, res) => {
 
 
+   // console.log(req.body.date )
   startPars(req.body.date,true)
 
   res.status(201).send('dadadd');
 });
 
+router.post("/parser/stop", async (req, res) => {
+
+
+  console.log(req.body.work)
+  work = req.body.work
+
+  res.status(201).send('stop work');
+});
+
+router.post("/parser/status", async (req, res) => {
+  res.status(201).send(work);
+});
 
 
 

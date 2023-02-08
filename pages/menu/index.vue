@@ -54,6 +54,17 @@
               @click="setDate()"
             />
 
+            <sui-button
+              compact
+              :icon="icon"
+              label-position="left"
+              :content="content"
+              toggle
+              :active="isActive"
+              @click="setWork()"
+            />
+
+
           </sui-grid>
 
 
@@ -83,8 +94,26 @@
         items: ['Главная'],
       };
     },
+    async mounted() {
+      let status
+      await axios({
+        method: 'post',
+        url: '/api/parser/status'
+      }).then(function (response) {
+        status = response.data
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
+      console.log('status')
+      console.log(status)
+
+      this.isActive = status
+    },
     methods: {
+
+
       theme() {
         console.log(this.date_today)
         // console.log( this.$colorMode)
@@ -113,6 +142,7 @@
             url: '/api/parser',
             data: {
               "date": this.date_today,
+              "work": this.isActive,
             }
           }).then(function (response) {
             console.log(response);
@@ -122,9 +152,25 @@
           });
         }
 
+      },
+
+      async setWork() {
+
+
+          await axios({
+            method: 'post',
+            url: '/api/parser/stop',
+            data: {
+              "work": false,
+            }
+          }).then(function (response) {
+            console.log(response);
+          })
+            .catch(function (error) {
+              console.log(error);
+            });
+
       }
-
-
     },
   };
 </script>
