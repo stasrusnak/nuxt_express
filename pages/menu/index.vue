@@ -53,7 +53,7 @@
               :icon="icon"
               label-position="left"
               toggle
-              content="Парсинг карт"
+              content="Парсинг списка"
               :active="isActive"
               @click="setDate()"
             />
@@ -83,7 +83,7 @@
         <sui-grid-column :width="10">
 
           <sui-grid column :width="15">
-            <div style=" height:500px;overflow-y: scroll;" v-show="this.logs" >
+            <div style="width: 800px; height:400px;overflow-y: scroll;"  v-show="this.logs" >
             <sui-table striped  >
               <sui-table-header>
                 <sui-table-row>
@@ -114,25 +114,14 @@
 
           <sui-grid column :width="15">
 
-            <client-only>
-              <date-picker placeholder="Год-месяц-день"
-                           format='YYYY-MM-DD'
-                           valueType="format"
-                           v-model="date_today"
-                           :lang="lang"
-                           @change="theme"
-              />
-            </client-only>
-
             <sui-button
               compact
-              :disabled="!date_today"
-              :icon="icon"
+              :icon="'pause'"
               label-position="left"
               toggle
               content="Парсинг карт"
-              :active="isActive"
-              @click="setDate()"
+              :active="isActiveGameParsing"
+              @click="startGamePars()"
             />
 
             <sui-button
@@ -141,14 +130,27 @@
               label-position="left"
               content="Стоп"
               toggle
-              :active="isActive"
-              @click="setWork()"
+              :active="isActiveGameParsing"
+              @click="stopGamePars()"
             />
 
-            <sui-button  @click="getLogs()" primary>Logs</sui-button>
+            <sui-button  @click="getGameLogs()" primary>Logs</sui-button>
           </sui-grid>
 
-
+          <div style="width: 800px; height:400px;overflow-y: scroll;" v-show="this.logsGame" >
+            <sui-table striped  >
+              <sui-table-header>
+                <sui-table-row>
+                  <sui-table-header-cell>Logs</sui-table-header-cell>
+                </sui-table-row>
+              </sui-table-header>
+              <sui-table-body>
+                <sui-table-row vertical-align="top" v-for="(game, key) in this.logsGame" :key="key">
+                  <sui-table-cell>{{game}}</sui-table-cell>
+                </sui-table-row>
+              </sui-table-body>
+            </sui-table>
+          </div>
 
         </sui-grid-column>
         <sui-grid-column :width="3">
@@ -171,7 +173,9 @@
         icon: 'play',
         content: 'Play',
         logs: null,
-        isActive: true,
+        logsGame: null,
+        isActive: false,
+        isActiveGameParsing: false,
         lang: ru,
         date_today: null,
         items: ['Главная'],
@@ -179,20 +183,22 @@
     },
     async mounted() {
       let status
+      let gameParsing
       await axios({
         method: 'post',
         url: '/api/parser/status'
-      }).then(function (response) {
-        status = response.data
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-      console.log('status')
-      console.log(status)
-
+      }).then(function (response) {status = response.data})
+      .catch(function (error) {console.log(error);});
       this.isActive = status
+
+      await axios({
+        method: 'post',
+        url: '/api/game/status'
+      }).then(function (response) {gameParsing = response.data})
+        .catch(function (error) {console.log(error);});
+      this.isActiveGameParsing = gameParsing
+
+      console.log('gameParsing '+gameParsing)
     },
     methods: {
 
@@ -207,23 +213,56 @@
         //   );
       },
 
+
+
       async getLogs(){
         let logs
         await axios({
           method: 'post',
           url: '/api/parser/logs'
-        }).then(function (response) {
-           logs  = response.data
-        })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-        console.log(' this.logs  ')
-        console.log(logs)
-
+        }).then(function (response) {logs  = response.data})
+          .catch(function (error) {console.log(error);});
         this.logs = logs
+      },
+      async getGameLogs(){
+        let gamelogs
+        await axios({
+          method: 'post',
+          url: '/api/game/logs'
+        }).then(function (response) {gamelogs  = response.data})
+          .catch(function (error) {console.log(error);});
+        this.logsGame = gamelogs
+        console.log(this.logsGame)
+      },
 
+      async startGamePars() {
+        await axios({
+          method: 'post',
+          url: '/api/game',
+          data: {
+            "work": true,
+          }
+        }).then(function (response) {console.log(response);})
+          .catch(function (error) {console.log(error);});
+        this.isActiveGameParsing = !this.isActiveGameParsing
+      },
+
+      async stopGamePars() {
+        let gameParsing
+        await axios({
+          method: 'post',
+          url: '/api/game/stop',
+          data: {
+            "work": false,
+          }
+        }).then(function (response) {  console.log(response);  })
+          .catch(function (error) {  console.log(error);  });
+        await axios({
+          method: 'post',
+          url: '/api/game/status'
+        }).then(function (response) {gameParsing = response.data})
+          .catch(function (error) {console.log(error);});
+         this.isActiveGameParsing = gameParsing
       },
 
       async setDate() {
@@ -258,7 +297,6 @@
 
       async setWork() {
 
-
           await axios({
             method: 'post',
             url: '/api/parser/stop',
@@ -276,16 +314,8 @@
             await axios({
               method: 'post',
               url: '/api/parser/status'
-            }).then(function (response) {
-              status = response.data
-            })
-              .catch(function (error) {
-                console.log(error);
-              });
-
-            console.log('status')
-            console.log(status)
-
+            }).then(function (response) {  status = response.data  })
+              .catch(function (error) {  console.log(error);  });
             this.isActive = status
 
       }

@@ -10,13 +10,17 @@ const test = require('./routes/test')
 const posts = require('./routes/posts')
 const menu = require('./routes/menu')
 const parser = require('./routes/parser')
+const game = require('./routes/game')
+
 
 // Import API Routes
+
 app.use(users)
 app.use(test)
 app.use(posts)
 app.use(menu)
 app.use(parser)
+app.use(game)
 
 // Export express app
 module.exports = app

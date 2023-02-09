@@ -1,5 +1,6 @@
+
 const mongoose = require('mongoose');
-const config = require('../config.json')
+const config = process.env.API_TOKEN
 const path = require('path');
 const fs = require("fs");
 const fetch = (...args) =>
@@ -10,9 +11,13 @@ const ActionParser = require("@kokomi/w3g-parser").ActionParser;
 
 const maps = require('../models/map.model');
 const User = require('../models/user.model');
-
 const compositeOpponent = require('glicko2-composite-opponent');
 const glicko2 = require('glicko2');
+
+
+const { Router } = require('express')
+const router = Router()
+
 
 const settings = {
   // tau : "Reasonable choices are between 0.3 and 1.2, though the system should
@@ -25,20 +30,13 @@ const settings = {
   rd: 250,
   //vol : Default volatility (expected fluctation on the player rating)
   vol: 0.09,
-
 };
+
 var ranking = new glicko2.Glicko2(settings);
 var pc = ranking.makePlayer()
 var matches = [];
 
 let state = {};
-
-// TODO make API
-
-const { Router } = require('express')
-
-
-const router = Router()
 
 let logs = []
 let work = false
@@ -60,39 +58,38 @@ const wait = ms => new Promise(res => setTimeout(res, ms))
 
 
 
-mongoose.connect(config.mongo_url, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-})
-  .then(async () => {
-    console.log("connect");
-       asparsMapSetStats()
+function startPars(iswork){
 
+  mongoose.connect(config, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
   })
-  .catch(error => console.log('mongodb connected error! :' + error))
+    .then(async () => {
+      console.log("connect");
+      if(iswork) work = iswork
+      asparsMapSetStats()
+
+    })
+    .catch(error => console.log('mongodb connected error! :' + error))
 
 
-
-
+}
 
 async function asparsMapSetStats(){
 
-
   do{
 
-
     let link = await maps.find({pars: 0});
-
-
     for (const l of link) {
-
       let li = l
+
+      if (logs.length > 100) logs = logs.slice(-100)
       console.log(l.link)
+      logs.push(l.link)
       state = await getReplays('https://replays.irinabot.ru/94545/'+l.link)
 
-    // let li = 1
+     if (!work) return
 
-      console.log(state)
 
       if (li && state) {
         let players = [];
@@ -113,6 +110,7 @@ async function asparsMapSetStats(){
             await user.save()
               .then(() => {
                 console.log(state.playerToName[key] + ' create')
+                logs.push(state.playerToName[key] + ' create')
               })
             players.push(user)
           } else {
@@ -141,7 +139,7 @@ async function asparsMapSetStats(){
             switch (state.flags[key]) {
               case "winner" :
                 let plw = getPlayers(state.playerToName[key])
-                console.log(plw)
+                // console.log(plw)
                 winner.push({
                   'nick': plw.nick,
                   'PTS': 0,
@@ -151,7 +149,7 @@ async function asparsMapSetStats(){
                 break
               case "loser" :
                 let pll = getPlayers(state.playerToName[key])
-                console.log(pll)
+                // console.log(pll)
                 loser.push({
                   'nick': pll.nick,
                   'PTS': 0,
@@ -173,12 +171,12 @@ async function asparsMapSetStats(){
         if (state.flags) {
           let matches = compositeOpponent(wt, lt, 1);
           ranking.updateRatings(matches);
-          console.log('winners')
+          // console.log('winners')
           wt[0] ? winner[0].PTS = Math.round(wt[0].getRating()) : 1
           wt[1] ? winner[1].PTS = Math.round(wt[1].getRating()) : 1
           wt[2] ? winner[2].PTS = Math.round(wt[2].getRating()) : 1
           wt[3] ? winner[3].PTS = Math.round(wt[3].getRating()) : 1
-          console.log('losers')
+          // console.log('losers')
           lt[0] ? loser[0].PTS = Math.round(lt[0].getRating()) : 1
           lt[1] ? loser[1].PTS = Math.round(lt[1].getRating()) : 1
           lt[2] ? loser[2].PTS = Math.round(lt[2].getRating()) : 1
@@ -244,26 +242,19 @@ async function asparsMapSetStats(){
           { $set: data }
         ).then(async () => {
           console.log("save new map data : ");
+          logs.push("save new map data : ")
         })
-
-
       }
-
       await wait(2000)
     }
 
     console.log('New task')
     await wait(30000)
 
-  }while (1)
+  }while (work)
 
 
-  return true
 }
-
-
-
-
 
 const getRawData = (URL) => {
   return fetch(URL)
@@ -283,11 +274,8 @@ const getRawData = (URL) => {
 const getReplays = async (URL) => {
   let file = await getRawData(URL);
   // const file = fs.readFileSync(path.resolve(__dirname, '../src/rmk.w3g'));
-
-
   return getStats(file)
 };
-
 function getStats(file) {
   let state = {};
   let asuna = new ReplayParser();
@@ -423,30 +411,29 @@ function getStats(file) {
 }
 
 
-
-router.post("/parser", async (req, res) => {
+router.post("/game", async (req, res) => {
   // console.log(req.body.date )
-  startPars(req.body.date,true)
+  startPars(true)
 
   res.status(201).send('start work');
 });
 
-router.post("/parser/stop", async (req, res) => {
+router.post("/game/stop", async (req, res) => {
 
   console.log(req.body.work)
   work = req.body.work
   res.status(201).send('stop work');
 });
 
-router.post("/parser/status", async (req, res) => {
+router.post("/game/status", async (req, res) => {
   res.status(201).send(work);
 });
 
 
-router.post("/parser/logs", async (req, res) => {
+router.post("/game/logs", async (req, res) => {
   res.status(201).send(logs);
 });
 
 
-
+module.exports = router
 

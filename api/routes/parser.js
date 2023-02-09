@@ -52,17 +52,10 @@ let work = false
 
 function startPars(datePars,iswork){
   mongoose.set('strictQuery', false)
-
-  mongoose.connect(config, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-
-  })
+  mongoose.connect(config, {useUnifiedTopology: true,useNewUrlParser: true})
     .then(async () => {
       console.log('mongodb connected!')
-
       console.log(datePars)
-
       if(iswork) work = iswork
 
       do {
@@ -157,7 +150,6 @@ function startPars(datePars,iswork){
 router.post("/parser", async (req, res) => {
    // console.log(req.body.date )
   startPars(req.body.date,true)
-
   res.status(201).send('start work');
 });
 
@@ -176,11 +168,6 @@ router.post("/parser/status", async (req, res) => {
 router.post("/parser/logs", async (req, res) => {
   res.status(201).send(logs);
 });
-
-
-
-
-
 
 
 module.exports = router;
