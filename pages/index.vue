@@ -22,7 +22,6 @@
           <sui-icon name="circle" style="margin: 0"/>
           T
         </a>
-
       </sui-menu-item>
     </sui-menu>
 

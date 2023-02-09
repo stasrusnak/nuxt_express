@@ -18,7 +18,7 @@
       handleAction(actionName) {
 
         this.$router.push({
-          name: 'users',
+          name: `users`,
           params: {
             obj: {...actionName}
           },

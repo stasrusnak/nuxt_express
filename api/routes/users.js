@@ -15,7 +15,7 @@ router.get('/users', function (req, res, next) {
 })
 
 /* GET user by ID. */
-router.get('/users/:nick', function (req, res, next) {
+router.get('/users/:id', function (req, res, next) {
 
   //  let par = req.params.nick
   // if (par === '(ANUBIS)') {

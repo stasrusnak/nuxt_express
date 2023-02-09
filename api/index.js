@@ -11,6 +11,7 @@ const posts = require('./routes/posts')
 const menu = require('./routes/menu')
 const parser = require('./routes/parser')
 const game = require('./routes/game')
+const archive = require('./routes/archive')
 
 
 // Import API Routes
@@ -21,6 +22,7 @@ app.use(posts)
 app.use(menu)
 app.use(parser)
 app.use(game)
+app.use(archive)
 
 // Export express app
 module.exports = app
