@@ -15,13 +15,16 @@ router.get('/users', function (req, res, next) {
 })
 
 /* GET user by ID. */
-router.get('/users/:id', function (req, res, next) {
-  const id = parseInt(req.params.id)
-  if (id >= 0 && id < users.length) {
-    res.json(users[id])
-  } else {
-    res.sendStatus(404)
-  }
+router.get('/users/:nick', function (req, res, next) {
+
+  //  let par = req.params.nick
+  // if (par === '(ANUBIS)') {
+  //   res.send('dadata')
+  // } else {
+  //   res.sendStatus(404)
+  // }
+
+  res.send('dadada')
 })
 
 module.exports = router
