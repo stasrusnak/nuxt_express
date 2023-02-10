@@ -83,7 +83,7 @@
         <sui-grid-column :width="10">
 
           <sui-grid column :width="15">
-            <div style="width: 800px; height:400px;overflow-y: scroll;"  v-show="this.logs" >
+            <div style="width: 800px; height:400px;overflow-y: auto;"  v-show="this.logs" >
             <sui-table striped  >
               <sui-table-header>
                 <sui-table-row>
@@ -137,7 +137,7 @@
             <sui-button  @click="getGameLogs()" primary>Logs</sui-button>
           </sui-grid>
 
-          <div style="width: 800px; height:400px;overflow-y: scroll;" v-show="this.logsGame" >
+          <div style="width: 800px; height:400px;overflow-y: auto;" v-show="this.logsGame" >
             <sui-table striped  >
               <sui-table-header>
                 <sui-table-row>

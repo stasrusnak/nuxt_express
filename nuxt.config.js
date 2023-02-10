@@ -29,6 +29,8 @@ export default async () => {
     });
 
 
+  const url = new URL(process.env.BASE_URL);
+
   // console.log(data)
 
 
@@ -115,10 +117,10 @@ export default async () => {
 
     /* For deployment you might want to edit host and port
     */
-    // server: {
-    //  port: 8000, // default: 3000
-    //  host: '0.0.0.0' // default: localhost
-    // },
+    server: {
+     port: url.port, // default: 3000
+     host: url.hostname // default: localhost
+    },
 
     /*
     ** Build configuration

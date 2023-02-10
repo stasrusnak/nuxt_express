@@ -21,7 +21,9 @@
         <sui-card v-if="this.obj" >
 
           <sui-card-content>
-            <sui-card-header>{{this.nick}}</sui-card-header>
+            <sui-card-header>
+              <NickName :data="{nick:this.nick}" />
+            </sui-card-header>
           </sui-card-content>
           <sui-card-content  >
             <sui-list>
@@ -60,103 +62,120 @@
         </sui-card>
         <div v-else></div>
 
-        <div style="width: 800px; height:400px;overflow-y: scroll;"  v-show="this.maps" >
+        <div style="width: 800px; height:400px;overflow-y: auto;"  v-show="this.maps" >
 
 
           <sui-table single-line>
             <sui-table-header>
               <sui-table-row>
-                <sui-table-header-cell>Name</sui-table-header-cell>
-                <sui-table-header-cell>Registration Date</sui-table-header-cell>
-                <sui-table-header-cell>E-mail address</sui-table-header-cell>
-                <sui-table-header-cell>Premium Plan</sui-table-header-cell>
+                <sui-table-header-cell>Номер игры</sui-table-header-cell>
+                <sui-table-header-cell>Дата</sui-table-header-cell>
+                <sui-table-header-cell>Название</sui-table-header-cell>
+                <sui-table-header-cell>Длительность</sui-table-header-cell>
               </sui-table-row>
             </sui-table-header>
 
-            <sui-table-body v-for="(log, key) in this.maps" :key="key" >
+            <sui-table-body v-for="(item, index) in this.maps" :key="index" >
               <sui-table-row>
-                <sui-table-cell>{{log.idrep}}</sui-table-cell>
-                <sui-table-cell>{{log.date}}</sui-table-cell>
+                <sui-table-cell>{{item.idrep}}</sui-table-cell>
+                <sui-table-cell>{{item.date}}</sui-table-cell>
                 <sui-table-cell>
-
-<!--                  v-on:click="openGame(log)"-->
-
-                  <a is="sui-list-header" @click.native="toggle(log)" >{{getNameMap(log.idrep)}}</a>
-                  <sui-list-icon name="download" link size="large" v-on:click="downloadRep(log.link)" >
+                  <a is="sui-list-header" @click.native="toggle(item)" >{{getNameMap(item.idrep)}}</a>
+                  <sui-list-icon name="download" link size="large" v-on:click="downloadRep(item.link)" >
                   </sui-list-icon>
                 </sui-table-cell>
-                <sui-table-cell>{{log.time}} </sui-table-cell>
+                <sui-table-cell>{{item.time}} </sui-table-cell>
               </sui-table-row>
             </sui-table-body>
           </sui-table>
-
-
-<!--          <sui-table striped  >-->
-<!--            <sui-table-header>-->
-<!--              <sui-table-row>-->
-<!--                <sui-table-header-cell>Архив игр</sui-table-header-cell>-->
-<!--              </sui-table-row>-->
-<!--            </sui-table-header>-->
-
-<!--&lt;!&ndash;            date:"2023-02-09_01-15"&ndash;&gt;-->
-<!--&lt;!&ndash;            date_insert:"2023-02-09T15:26:47.608Z"&ndash;&gt;-->
-<!--&lt;!&ndash;            idrep:237&ndash;&gt;-->
-<!--&lt;!&ndash;            leavers:[]&ndash;&gt;-->
-<!--&lt;!&ndash;            link :"GHost++_2023-02-09_01-15_Legion_TD_x20_-prccah_+237_(46m31s).w3g"&ndash;&gt;-->
-<!--&lt;!&ndash;            losers:[{nick: "rad004", PTS: 1017, prevPTS: 1024}, {nick: "A._.D", PTS: 1017, prevPTS: 1024},…]&ndash;&gt;-->
-<!--&lt;!&ndash;            pars :1&ndash;&gt;-->
-<!--&lt;!&ndash;            rmk:[]&ndash;&gt;-->
-<!--&lt;!&ndash;            time : "46:31"&ndash;&gt;-->
-<!--&lt;!&ndash;            winners:&ndash;&gt;-->
-<!--            <sui-table-body>-->
-<!--              <sui-table-row vertical-align="top" v-for="(log, key) in this.maps" :key="key">-->
-<!--                <sui-table-cell>{{log}}</sui-table-cell>-->
-<!--                <sui-table-cell>{{log}}</sui-table-cell>-->
-<!--              </sui-table-row>-->
-<!--            </sui-table-body>-->
-<!--          </sui-table>-->
-
         </div>
 
 
-        <nuxt-link class="button" to="/">
-          Главная
-        </nuxt-link>
+<!--        <nuxt-link class="button" to="/">-->
+<!--          Главная-->
+<!--        </nuxt-link>-->
 
         <sui-modal v-model="open" v-if="modelLog">
           <sui-modal-header v-show="modelLog.idrep">{{getNameMap(modelLog.idrep)}}</sui-modal-header>
           <sui-modal-content>
-            <div style="width: 800px; height:400px;overflow-y: scroll;"  v-show="this.obj" >
-              <sui-table striped  >
+            <div style="width: 100%; overflow-y: auto; margin: 0 auto"  >
+
+
+              <sui-table celled v-if="modelLog.rmk.length"  >
                 <sui-table-header>
                   <sui-table-row>
-                    <sui-table-header-cell>Проиграли</sui-table-header-cell>
-                    <sui-table-header-cell>Выйрали</sui-table-header-cell>
-                    <sui-table-header-cell></sui-table-header-cell>
+                    <sui-table-header-cell>Ник</sui-table-header-cell>
+                    <sui-table-header-cell>PTS</sui-table-header-cell>
+                    <sui-table-header-cell>Начислено</sui-table-header-cell>
+                    <sui-table-header-cell>Результат</sui-table-header-cell>
                   </sui-table-row>
                 </sui-table-header>
                 <sui-table-body>
-                  <sui-table-row   v-for="(log, key) in modelLog.losers" :key="key">
-                    <sui-table-cell>{{log.nick}} {{log.prevPTS}} -> {{log.PTS}}</sui-table-cell>
+                  <sui-table-row v-for="(log, key) in modelLog.rmk" :key="key">
+                    <sui-table-cell warning>
+                      <NickName :data="{nick:log.nick}" />
+                    </sui-table-cell>
+                    <sui-table-cell warning>{{log.PTS}}</sui-table-cell>
+                    <sui-table-cell warning>{{log.PTS-log.prevPTS}}</sui-table-cell>
+                    <sui-table-cell warning >
+                      <sui-icon name="blind" />
+                      RMK
+                    </sui-table-cell>
                   </sui-table-row>
-                  <sui-table-row  v-for="(lo, k) in modelLog.winners" :key="k">
-                    <sui-table-cell>{{lo.nick}} {{lo.prevPTS}} -> {{lo.PTS}}</sui-table-cell>
+                </sui-table-body>
+              </sui-table>
+
+              <sui-table celled v-else >
+                <sui-table-header>
+                  <sui-table-row>
+                    <sui-table-header-cell>Ник</sui-table-header-cell>
+                    <sui-table-header-cell>PTS</sui-table-header-cell>
+                    <sui-table-header-cell>Начислено</sui-table-header-cell>
+                    <sui-table-header-cell>Результат</sui-table-header-cell>
+                    <sui-table-header-cell>Лив</sui-table-header-cell>
+                  </sui-table-row>
+                </sui-table-header>
+                <sui-table-body>
+                  <sui-table-row v-for="(log, key) in modelLog.winners" :key="key">
+                    <sui-table-cell positive>
+                      <NickName :data="{nick:log.nick}" />
+                    </sui-table-cell>
+                    <sui-table-cell positive>{{log.PTS}}</sui-table-cell>
+                    <sui-table-cell positive>{{log.PTS-log.prevPTS}}</sui-table-cell>
+                    <sui-table-cell positive >
+                      <sui-icon name="thumbs up outline" />
+                      Выйграл
+                    </sui-table-cell>
+                    <sui-table-cell positive text-align="center">
+                      <div v-show="isLeaver(log.nick,modelLog)">
+                        <sui-icon name="thumbs up outline" />
+                      </div>
+                    </sui-table-cell>
+                  </sui-table-row>
+                </sui-table-body>
+                  <sui-table-body>
+                  <sui-table-row v-for="(lo, k) in modelLog.losers" :data ="lo" :key="k">
+                    <sui-table-cell negative>
+                      <NickName :data="{nick:lo.nick}" />
+                    </sui-table-cell>
+                    <sui-table-cell negative> {{lo.PTS}}</sui-table-cell>
+                    <sui-table-cell negative>{{lo.PTS-lo.prevPTS}}</sui-table-cell>
+                    <sui-table-cell negative >
+                      <sui-icon name="thumbs down outline" />
+                      Проиграл
+                    </sui-table-cell>
+                    <sui-table-cell negative text-align="center">
+                      <div v-show="isLeaver(lo.nick,modelLog)">
+                        <sui-icon name="wheelchair" />
+                      </div>
+                    </sui-table-cell>
                   </sui-table-row>
                 </sui-table-body>
               </sui-table>
             </div>
-
-            <sui-modal-description>
-              <sui-header>Default Profile Image</sui-header>
-              <p>
-                We've found the following gravatar image associated with your e-mail
-                address.
-              </p>
-              <p>Is it okay to use this photo?</p>
-            </sui-modal-description>
           </sui-modal-content>
           <sui-modal-actions>
-            <sui-button positive @click.native="toggle">
+            <sui-button positive @click.native="toggle(null)">
               OK
             </sui-button>
           </sui-modal-actions>
@@ -170,6 +189,7 @@
 </template>
 
 <script>
+  import NickName from "../components/nickName";
   import axios from 'axios'
   export default {
     data: () => ({
@@ -178,9 +198,12 @@
       obj: null,
       maps: null,
       open: false,
-      modelLog: null
+      modelLog: null,
+      html: "",
     }),
-
+    components: {
+      NickName
+    },
     methods:{
       toggle(log) {
         this.modelLog = log
@@ -192,16 +215,12 @@
       downloadRep(link){
          window.open('https://replays.irinabot.ru/94545/'+link,'_blank');
       },
-      openGame(log){
-        this.$router.push({
-          name: `games`,
-          params: {
-            obj: {...log}
-          },
-        });
-
+      isLeaver(nick,modelLog){
+        return modelLog.leavers.includes(nick)
       }
+
     },
+
     async mounted(){
       this.obj = this.$route.params.obj
       this.nick = this.$route.params.obj.nick
@@ -232,29 +251,13 @@
 <style scoped>
   .container {
     margin: 0 auto;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    min-height: 92vh;
   }
-  .title
-  {
-    margin: 30px 0;
-  }
-  .users
-  {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .user
-  {
-    margin: 10px 0;
-  }
-  .button
-  {
-    display: inline-block;
-    margin-top: 50px;
-  }
+/*.ui.ribbon.label {*/
+/*  left: calc(1rem - 1.2em);*/
+/*}*/
 </style>
