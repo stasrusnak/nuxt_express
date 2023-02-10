@@ -43,7 +43,6 @@
   export default {
     async asyncData({$http}) {
       const posts = await $http.$get('/api/posts')
-
       return {
         posts: posts,
       }

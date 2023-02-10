@@ -75,6 +75,13 @@ export default async () => {
       { src: '~/plugins/vue-datepicker', ssr: false },
     ],
 
+
+    // axios: {
+    //   proxy: true
+    // },
+    // proxy: {
+    //   "/api": process.env.BASE_URL
+    // },
     /*
     ** Auto import components
     ** See https://nuxtjs.org/api/configuration-components

@@ -1,5 +1,4 @@
 const express = require('express')
-
 // Create express instance
 const app = express()
 app.use(express.json())
@@ -14,7 +13,12 @@ const game = require('./routes/game')
 const archive = require('./routes/archive')
 
 
-
+const cors = require("cors");
+app.use(cors());
+app.all('/*', (req, res, next) => {
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
 
 // Import API Routes
 
@@ -29,11 +33,11 @@ app.use(archive)
 // Export express app
 module.exports = app
 
-// Start standalone server if directly running
-if (require.main === module) {
-  const port = process.env.PORT || 3001
-  app.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`API server listening on port ${port}`)
-  })
-}
+// // Start standalone server if directly running
+// if (require.main === module) {
+//   const port = process.env.PORT || 3001
+//   app.listen(port, () => {
+//     // eslint-disable-next-line no-console
+//     console.log(`API server listening on port ${port}`)
+//   })
+// }

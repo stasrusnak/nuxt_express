@@ -10,9 +10,9 @@
         </a>
       </sui-menu-item>
       <sui-menu-item>
-        <nuxt-link class="button" to="/">
+        <a class="button" href="/">
           Главная
-        </nuxt-link>
+        </a>
       </sui-menu-item>
     </sui-menu>
 
