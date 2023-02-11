@@ -29,7 +29,12 @@ export default async () => {
     });
 
 
-  const url = new URL(process.env.BASE_URL);
+  const base_url = process.env.BASE_URL || 'http://0.0.0.0:3000'
+
+
+
+
+  const url = new URL(base_url);
 
   // console.log(data)
 
@@ -86,7 +91,7 @@ export default async () => {
     ** Auto import components
     ** See https://nuxtjs.org/api/configuration-components
     */
-    components: true,
+    components: true ,
 
     /*
     ** Nuxt.js dev-modules
@@ -116,7 +121,7 @@ export default async () => {
 
 
     basic: {
-      name: data.name,
+      name: data.name ,
       pass: data.pass,
       match: '/menu',
       enabled: true // require boolean value(nullable)
@@ -125,7 +130,7 @@ export default async () => {
     /* For deployment you might want to edit host and port
     */
     server: {
-     port: url.port, // default: 3000
+     port: url.port , // default: 3000
      host: url.hostname // default: localhost
     },
 
