@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const config = process.env.API_TOKEN
 const path = require('path');
@@ -15,7 +14,7 @@ const compositeOpponent = require('glicko2-composite-opponent');
 const glicko2 = require('glicko2');
 
 
-const { Router } = require('express')
+const {Router} = require('express')
 const router = Router()
 
 
@@ -57,8 +56,7 @@ let work = false
 const wait = ms => new Promise(res => setTimeout(res, ms))
 
 
-
-function startPars(iswork){
+function startPars(iswork) {
 
   mongoose.connect(config, {
     useUnifiedTopology: true,
@@ -66,7 +64,7 @@ function startPars(iswork){
   })
     .then(async () => {
       console.log("connect");
-      if(iswork) work = iswork
+      if (iswork) work = iswork
       asparsMapSetStats()
 
     })
@@ -75,9 +73,9 @@ function startPars(iswork){
 
 }
 
-async function asparsMapSetStats(){
+async function asparsMapSetStats() {
 
-  do{
+  do {
 
     let link = await maps.find({pars: 0});
     for (const l of link) {
@@ -86,12 +84,31 @@ async function asparsMapSetStats(){
       if (logs.length > 100) logs = logs.slice(-100)
       console.log(l.link)
       logs.push(l.link)
-      state = await getReplays('https://replays.irinabot.ru/94545/'+l.link)
-
-     if (!work) return
 
 
-      if (li && state) {
+      state = await getReplays('https://replays.irinabot.ru/94545/' + l.link)
+
+      if (!work) return
+
+
+      if (li && state && state.playerToName && state.flags) {
+
+        if (state.flags.length < 8) {
+          let data = {
+            pars: 1
+          }
+
+          await maps.findOneAndUpdate(
+            {_id: li._id},
+            {$set: data}
+          ).then(async () => {
+            console.log("low count players :" + li._id);
+            logs.push("low count players :" + li._id);
+          })
+          break
+        }
+
+
         let players = [];
         for (let key in state.playerToName) {
           let user = await User.findOne({nick: state.playerToName[key]});
@@ -158,7 +175,7 @@ async function asparsMapSetStats(){
                 lt.push(ranking.makePlayer(pll.PTS, 42))
                 break
             }
-          }else {
+          } else {
             let plrmk = getPlayers(state.playerToName[key])
             rmk.push({
               'nick': plrmk.nick,
@@ -201,21 +218,29 @@ async function asparsMapSetStats(){
           for (const l of [...loser]) {
             let pl = getPlayers(l.nick)
 
-            l.PTS === 0 ? pl.PTS = pl.PTS - 27 :  pl.PTS = l.PTS
-            // pl.PTS = l.PTS
-            pl.prevPTS = l.prevPTS
-            pl.Games = pl.Games + 1
+            if (l.PTS === 0) {
+              pl.PTS = pl.PTS - 27
+              const index = loser.findIndex(item => item.nick === l.nick);
+              if (index !== -1) {
+                loser[index].PTS = pl.PTS
+              }
+            } else {
+              pl.PTS = l.PTS
+            }
 
-            if(leavers.includes(l.nick) ){
+              pl.prevPTS = l.prevPTS
+              pl.Games = pl.Games + 1
+
+            if (leavers.includes(l.nick)) {
               pl.leavers = pl.leavers + 1
-            }else {
+            } else {
               pl.lose = pl.lose + 1
             }
 
             !pl.idreps.includes(li._id) ? pl.idreps = [...pl.idreps, li._id] : 1
             await pl.save()
           }
-        }else {
+        } else {
           for (const l of [...rmk]) {
             let pl = getPlayers(l.nick)
             pl.PTS = l.PTS
@@ -241,7 +266,7 @@ async function asparsMapSetStats(){
 
         await maps.findOneAndUpdate(
           {_id: li._id},
-          { $set: data }
+          {$set: data}
         ).then(async () => {
           console.log("save new map data : ");
           logs.push("save new map data : ")
@@ -253,7 +278,7 @@ async function asparsMapSetStats(){
     console.log('New task')
     await wait(30000)
 
-  }while (work)
+  } while (work)
 
 
 }
@@ -278,6 +303,7 @@ const getReplays = async (URL) => {
   // const file = fs.readFileSync(path.resolve(__dirname, '../src/rmk.w3g'));
   return getStats(file)
 };
+
 function getStats(file) {
   let state = {};
   let asuna = new ReplayParser();
