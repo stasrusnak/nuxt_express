@@ -200,7 +200,9 @@ async function asparsMapSetStats(){
 
           for (const l of [...loser]) {
             let pl = getPlayers(l.nick)
-            pl.PTS = l.PTS
+
+            l.PTS === 0 ? pl.PTS = pl.PTS - 27 :  pl.PTS = l.PTS
+            // pl.PTS = l.PTS
             pl.prevPTS = l.prevPTS
             pl.Games = pl.Games + 1
 
