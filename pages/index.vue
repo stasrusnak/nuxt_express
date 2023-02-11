@@ -54,6 +54,7 @@
           error: "",
           lang: "en",
           actionMode: "single",
+          sortingMode:"single",
           columns: [
             {
               key: "rank",
@@ -74,22 +75,22 @@
             {
               key: "Games",
               title: "Игр",
-              sortable: false
+              sortable: true
             },
             {
               key: "wins",
               title: "Победы",
-              sortable: false
+              sortable: true
             },
             {
               key: "leavers",
               title: "Ливы",
-              sortable: false
+              sortable: true
             },
             {
               key: "lose",
               title: "Поражения",
-              sortable: false
+              sortable: true
             },
             {
               key: "rmk",
@@ -97,7 +98,7 @@
               sortable: false
             },
             {
-              key: "ActionButtons",
+              key: "Подробнее",
               component: ActionButtons,
               sortable: false
             }

@@ -18,6 +18,10 @@ const mapsSchema = new Schema({
     type: String,
     default: ''
   },
+  errorType: {
+    type: String,
+    default: ''
+  },
   pars: {
     type: Number,
     default: 0

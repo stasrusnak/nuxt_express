@@ -86,16 +86,33 @@ async function asparsMapSetStats() {
       logs.push(l.link)
 
 
-      state = await getReplays('https://replays.irinabot.ru/94545/' + l.link)
+      try{
+        state = await getReplays('https://replays.irinabot.ru/94545/' + l.link)
+      }catch (e) {
+        let data = {
+          pars: 1,
+          errorType: 'ByteBuffer'
+        }
+        await maps.findOneAndUpdate(
+          {_id: li._id},
+          {$set: data}
+        ).then(async () => {
+          console.log("ByteBuffer pars:" + li._id);
+          logs.push("ByteBuffer players :" + li._id);
+        })
+        break
+      }
+
+
 
       if (!work) return
-
 
       if (li && state && state.playerToName && state.flags) {
 
         if (state.flags.length < 8) {
           let data = {
-            pars: 1
+            pars: 1,
+            errorType: 'flagsCount'
           }
 
           await maps.findOneAndUpdate(
@@ -271,7 +288,20 @@ async function asparsMapSetStats() {
           console.log("save new map data : ");
           logs.push("save new map data : ")
         })
+      }else {
+        let data = {
+          pars: 1,
+          errorType: 'vend'
+        }
+        await maps.findOneAndUpdate(
+          {_id: li._id},
+          {$set: data}
+        ).then(async () => {
+          console.log("vend  :" + li.idrep);
+          logs.push("vend:" + li.idrep);
+        })
       }
+
       await wait(2000)
     }
 
@@ -282,6 +312,8 @@ async function asparsMapSetStats() {
 
 
 }
+
+
 
 const getRawData = (URL) => {
   return fetch(URL)
