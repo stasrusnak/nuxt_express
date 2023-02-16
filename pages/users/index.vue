@@ -224,21 +224,12 @@
     async mounted(){
       this.obj = this.$route.params.obj
       this.nick = this.$route.params.obj.nick
-      console.log( this.obj )
-
 
       this.maps = await axios.post('/api/archive', {maps: this.obj.idreps})
         .then(function (response) {
-
-          console.log(response.data)
-
           return response.data
         })
         .catch(function (error) {console.log(error);});
-
-
-
-
     },
     head () {
       return {

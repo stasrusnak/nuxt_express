@@ -10,9 +10,9 @@
 
       </sui-menu-item>
       <sui-menu-item>
-        <nuxt-link class="button" to="/">
+        <a class="button" href="/">
           {{items[0]}}
-        </nuxt-link>
+        </a>
       </sui-menu-item>
       <!--      <a-->
       <!--        is="sui-menu-item"-->
@@ -154,9 +154,61 @@
 
         </sui-grid-column>
         <sui-grid-column :width="3">
+
         </sui-grid-column>
       </sui-grid-row>
+
+
+      <sui-grid-row>
+      </sui-grid-row>
+      <sui-grid-row>
+        <sui-grid-column :width="3">
+        </sui-grid-column>
+        <sui-grid-column :width="10">
+
+          <sui-grid column :width="15">
+
+            <sui-button
+              compact
+              color="olive"
+              toggle
+              content="Удалить карты"
+              @click=""
+            />
+
+            <sui-button
+              compact
+              color="olive"
+              toggle
+              content="Удалить профили"
+              @click=""
+            />
+            <sui-button
+              compact
+              color="olive"
+              toggle
+              content="Удалить бд"
+              @click=""
+            />
+
+
+          </sui-grid>
+
+
+        </sui-grid-column>
+        <sui-grid-column :width="3">
+
+        </sui-grid-column>
+      </sui-grid-row>
+
     </sui-grid>
+
+    <div>
+
+
+    </div>
+
+
 
 
   </div>

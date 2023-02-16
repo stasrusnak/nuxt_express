@@ -2,10 +2,10 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const fs = require("fs");
 const path = require('path');
-const config = process.env.API_TOKEN
+const config = process.env.MONGO_CONNECT
 const mongoose = require('mongoose');
 const maps = require('../models/map.model');
-
+mongoose.set('strictQuery', true);
 const { Router } = require('express')
 
 
@@ -52,7 +52,7 @@ let work = false
 
 function startPars(datePars,iswork){
   mongoose.set('strictQuery', false)
-  mongoose.connect(config, {useUnifiedTopology: true,useNewUrlParser: true})
+  mongoose.connect(config+'?authSource=admin', {useUnifiedTopology: true,useNewUrlParser: true})
     .then(async () => {
       console.log('mongodb connected!')
       console.log(datePars)

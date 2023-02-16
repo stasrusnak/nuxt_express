@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const config = process.env.API_TOKEN
+const config = process.env.MONGO_CONNECT
+mongoose.set('strictQuery', true);
 const path = require('path');
 const fs = require("fs");
 const fetch = (...args) =>
@@ -58,7 +59,7 @@ const wait = ms => new Promise(res => setTimeout(res, ms))
 
 function startPars(iswork) {
 
-  mongoose.connect(config, {
+  mongoose.connect(config+'?authSource=admin', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })

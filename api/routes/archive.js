@@ -3,12 +3,12 @@ const router = Router()
 const maps = require('../models/map.model');
 
 const mongoose = require('mongoose');
-const config = process.env.API_TOKEN
+const config = process.env.MONGO_CONNECT
+
+mongoose.set('strictQuery', true);
 
 
-
-
-mongoose.connect(config, {
+mongoose.connect(config+'?authSource=admin', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 })

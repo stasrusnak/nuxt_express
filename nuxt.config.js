@@ -1,42 +1,17 @@
-import axios from 'axios'
-
-
 export default async () => {
 
-  let body = {
-    "collection": "coll",
-    "database": "WC3_STATS",
-    "dataSource": "Cluster0",
-    "projection": {}
+  // const port = process.env.BASE_PORT || '3000'
+  // const host = process.env.BASE_HOST || '0.0.0.0'
+  // const base_url = `http://${host}:${port}/`
+  // const url = new URL(base_url);
+
+  let mongoUrl = ''
+  if (process.env.MONGO_CONNECT ) {
+    mongoUrl = new URL(process.env.MONGO_CONNECT)
+  }else{
+    mongoUrl = ''
   }
 
-  let data = {}
-
-  await axios({
-    method: 'post',
-    url: process.env.MONGO_DATA_API,
-    data: body,
-    headers: {
-      'content-type': 'application/json',
-      'Access-Control-Request-Headers': '*',
-      'api-key': process.env.MONGO_API_KEY,
-    }
-  }).then(function (response) {
-    data = response.data.document
-  })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-
-  const base_url = process.env.BASE_URL || 'http://0.0.0.0:3000'
-
-
-
-
-  const url = new URL(base_url);
-
-  // console.log(data)
 
 
   return {
@@ -68,8 +43,6 @@ export default async () => {
     css: [
       '@/assets/main.scss'
     ],
-
-
     /*
     ** Plugins to load before mounting the App
     ** https://nuxtjs.org/guide/plugins
@@ -121,19 +94,18 @@ export default async () => {
 
 
     basic: {
-      name: data.name ,
-      pass: data.pass,
+      name: mongoUrl.username || 'test',
+      pass: mongoUrl.password || 'test',
       match: '/menu',
       enabled: true // require boolean value(nullable)
     },
 
     /* For deployment you might want to edit host and port
     */
-    server: {
-     port: url.port , // default: 3000
-     host: url.hostname // default: localhost
-    },
-
+      server: {
+        port: 10001,     // default : 3000
+        host: '0.0.0.0' // do not put localhost (only accessible from the host machine)
+      },
     /*
     ** Build configuration
     ** See https://nuxtjs.org/api/configuration-build/

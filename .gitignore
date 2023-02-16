@@ -93,3 +93,7 @@ sw.*
 /api/src/site/site.html
 .api/src/site/site.html
 api/src/site/site.html
+
+docker-compose.yml
+/docker-compose.yml
+Dockerfile

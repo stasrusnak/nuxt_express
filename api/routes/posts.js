@@ -1,23 +1,29 @@
-
 const mongodb = require("mongodb");
 const { Router } = require('express')
 const router = Router()
- const  connectUrl = process.env.API_TOKEN;
+const  connectUrl = process.env.MONGO_CONNECT;
 
- console.log(connectUrl)
 
 // Get Posts
 router.get("/posts", async (req, res) => {
   const posts = await loadPostsCollection();
+  let count  = await posts.countDocuments()
   // res.send(await posts.find().sort({PTS:-1}) .toArray());
-  res.send(await posts.aggregate([
-    {
-      $setWindowFields: {
-        sortBy: {PTS: -1},
-        output: {rank: {$rank: {}}}
-      }
-    },
-  ]).toArray());
+  if(count !==0){
+   let base=[]
+   let postsbase
+   let rank = 0;
+    postsbase = await posts.find().sort({"PTS": -1 }).toArray()
+    postsbase.forEach(doc => {
+        rank++;
+        doc.rank = rank;
+        delete doc._id;
+        base.push(doc);
+      })
+    res.send(base);
+  }else {
+    res.status(201).send([]);
+  }
 
 });
 
@@ -54,14 +60,14 @@ router.put("/:id", async (req, res) => {
 });
 
 async function loadPostsCollection() {
-  const client = await mongodb.MongoClient.connect(
-    connectUrl,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  );
 
+    const client = await mongodb.MongoClient.connect(
+    connectUrl+'?authSource=admin',
+    {
+      useUnifiedTopology:true,
+      useNewUrlParser: true
+    }
+  )
 
   return client.db("WC3_STATS").collection("users");
 }
