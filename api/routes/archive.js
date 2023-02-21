@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 const maps = require('../models/map.model');
+const user = require('../models/user.model');
 
 const mongoose = require('mongoose');
 const config = process.env.MONGO_CONNECT
@@ -31,5 +32,17 @@ router.use('/archive', async (req, res) => {
   res.status(201).send(records);
 
 })
+
+
+router.use('/userarchive', async (req, res) => {
+
+  const reqq = req.body.nick
+  const records = await user.find().where('nick').in(reqq).exec();
+
+
+  res.status(201).send(records);
+
+})
+
 
 module.exports = router

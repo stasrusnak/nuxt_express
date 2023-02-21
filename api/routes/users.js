@@ -24,7 +24,8 @@ router.get('/users/:id', function (req, res, next) {
   //   res.sendStatus(404)
   // }
 
-  res.send('dadada')
+
+  res.send(req.params.id)
 })
 
 module.exports = router

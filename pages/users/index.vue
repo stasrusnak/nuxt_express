@@ -75,7 +75,7 @@
               </sui-table-row>
             </sui-table-header>
 
-            <sui-table-body v-for="(item, index) in this.maps" :key="index" >
+            <sui-table-body v-for="(item, index) in this.maps" :key="123213" >
               <sui-table-row>
                 <sui-table-cell>{{item.idrep}}</sui-table-cell>
                 <sui-table-cell>{{item.date}}</sui-table-cell>

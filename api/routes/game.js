@@ -110,7 +110,7 @@ async function asparsMapSetStats() {
 
       if (li && state && state.playerToName && state.flags) {
 
-        if (state.flags.length < 8) {
+        if (state.flags.length < 7) {
           let data = {
             pars: 1,
             errorType: 'flagsCount'
@@ -190,7 +190,7 @@ async function asparsMapSetStats() {
                   'PTS': 0,
                   'prevPTS': pll.PTS
                 })
-                lt.push(ranking.makePlayer(pll.PTS, 42))
+                lt.push(ranking.makePlayer(pll.PTS, 72))
                 break
             }
           } else {
@@ -237,7 +237,7 @@ async function asparsMapSetStats() {
             let pl = getPlayers(l.nick)
 
             if (l.PTS === 0) {
-              pl.PTS = pl.PTS - 27
+              pl.PTS = pl.PTS - 20
               const index = loser.findIndex(item => item.nick === l.nick);
               if (index !== -1) {
                 loser[index].PTS = pl.PTS

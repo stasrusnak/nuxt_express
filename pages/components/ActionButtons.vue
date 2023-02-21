@@ -11,20 +11,24 @@
 <script>
   export default {
     name: "ActionButtons",
+
     created() {
 
     },
+
     methods: {
       handleAction(actionName) {
 
-        this.$router.push({
-          name: `users`,
-          params: {
-            obj: {...actionName}
-          },
-        });
+        // this.$router.push({
+        //   name: `users`,
+        //   params: {
+        //     obj: {...actionName}
+        //   },
+        // });
 
 
+        let nick = actionName.nick
+        this.$router.push({ path: `/users/${nick}` })
 
       }
     },
