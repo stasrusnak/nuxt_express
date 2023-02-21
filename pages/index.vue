@@ -58,7 +58,7 @@
           columns: [
             {
               key: "rank",
-              title: "rank",
+              title: "RANK",
               type: "number"
             },
             {
@@ -70,37 +70,36 @@
               key: "nick",
               title: "Ник",
               component: NickName,
-              sortable: false
+              type: "string"
             },
             {
               key: "Games",
               title: "Игр",
-              sortable: true
+              type: "number"
             },
             {
               key: "wins",
-              title: "Победы",
-              sortable: true
+              title: "WIN",
+              type: "number"
             },
             {
               key: "leavers",
               title: "Ливы",
-              sortable: true
+              type: "number"
             },
             {
               key: "lose",
-              title: "Поражения",
-              sortable: true
+              title: "LOSE",
+              type: "number"
             },
+            // {
+            //   key: "rmk",
+            //   title: "RMK"
+            // },
             {
-              key: "rmk",
-              title: "RMK",
-              sortable: false
-            },
-            {
-              key: "Подробнее",
+              key: "INFO",
               component: ActionButtons,
-              sortable: false
+              sortable:false
             }
           ],
           text: {
@@ -129,8 +128,5 @@
   }
 </script>
 
-<style src="../assets/index.scss" lang="scss">
-
-
-</style>
+<style src="../assets/index.scss" lang="scss"></style>
 

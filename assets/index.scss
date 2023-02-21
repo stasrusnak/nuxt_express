@@ -8,6 +8,14 @@
   width: 70vw;
 }
 
+@media screen and (max-width: 1300px) {
+  .container{
+    width: 100%;
+  }
+}
+
+
+
 /*
    body {
        margin: 0;
@@ -90,6 +98,10 @@
    main {
        padding: 32px;
    }*/
+
+.data-table-info{
+  display: none;
+}
 .data-table {
   display: grid;
   width: 100%;
@@ -105,45 +117,63 @@
     grid-template-areas:
             "perPage search search search"
             "table table table table"
-            "info pagination pagination download";
+            "pagination pagination download";
   }
-  @media (min-width: 1051px) AND (max-width: 1400px) {
-    grid-template-areas:
-            "perPage search search search"
-            "table table table table"
-            "info pagination pagination pagination"
-            ". . download download";
-  }
-  @media (min-width: 851px) AND (max-width: 1050px) {
+
+  //@media (min-width: 1051px) AND (max-width: 1400px) {
+  //  grid-template-areas:
+  //          "perPage search search search"
+  //          "table table table table"
+  //          "info pagination pagination pagination"
+  //          ". . download download";
+  //}
+  @media (min-width: 851px) AND (max-width: 1400px) {
     grid-template-areas:
             "perPage search search search"
             "table table table table"
             "pagination pagination pagination pagination"
-            "info info download download";
+            "download download";
   }
-  @media (max-width: 800px) {
+
+  @media screen and (max-width: 800px) {
     & > .data-table-pagination {
       flex-wrap: wrap;
     }
+
+    .data-table-table .action-column, .data-table-table .column {
+      padding: 13px 0px 13px 0px;
+
+    }
+    .table td, .table th {
+      padding: 0;
+      vertical-align: middle;
+      border-top: 1px solid #dee2e6;
+      text-align: center;
+    }
+
   }
   @media (min-width: 651px) AND (max-width: 850px) {
     grid-template-areas:
             "perPage search search search"
             "table table table table"
             "pagination pagination pagination pagination"
-            "info info info info"
             "download download download download";
   }
-  @media (max-width: 650px) {
+  @media screen and (max-width: 650px) {
     grid-template-areas:
             "search search search search"
             "perPage perPage perPage perPage "
-            "table table table table"
-            "pagination pagination pagination pagination"
-            "info info info info"
+            "table table table  "
+            "pagination    "
             "download download download download";
-    & > .data-table-per-page {
-      margin-left: auto
+
+  }
+  .data-table-pagination {
+    margin-left: -78px !important;
+    .pagination {
+      margin: 0;
+      padding: 1px;
+      overflow: unset;
     }
   }
 }
