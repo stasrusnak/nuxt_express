@@ -11,6 +11,7 @@ const menu = require('./routes/menu')
 const parser = require('./routes/parser')
 const game = require('./routes/game')
 const archive = require('./routes/archive')
+const replays = require('./routes/replays')
 
 
 const cors = require("cors");
@@ -29,6 +30,7 @@ app.use(menu)
 app.use(parser)
 app.use(game)
 app.use(archive)
+app.use(replays)
 
 // Export express app
 module.exports = app
