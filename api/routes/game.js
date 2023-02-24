@@ -14,6 +14,7 @@ const User = require('../models/user.model');
 const compositeOpponent = require('glicko2-composite-opponent');
 const glicko2 = require('glicko2');
 
+import {getClassColorByPlayer} from '../main/colorPiker'
 
 const {Router} = require('express')
 const router = Router()
@@ -43,14 +44,28 @@ let work = false
 
 // let state = {
 //   "playerToName": {
-//     "0": "-HakypuJlo-",
-//     "1": "putch93",
-//     "2": "Zer0id228",
-//     "3": "humorist8",
-//     "4": "YooMaYoo",
-//     "5": "romanuk2020",
-//     "6": "BetterThatYou",
-//     "7": "Alaster"
+//     "0": "murzilok",
+//     "1": "reint",
+//     "2": "NERV",
+//     "3": "|c00000000In|c00FFFF00S",
+//     "4": "reZerV",
+//     "5": "Firespekt4",
+//     "6": "CTPAIIOH",
+//     "7": "lapmy70"
+//   },
+//   "flags": {
+//     "0": "winner",
+//     "1": "winner",
+//     "2": "winner",
+//     "3": "winner",
+//     "4": "loser",
+//     "5": "loser",
+//     "6": "loser",
+//     "7": "loser"
+//   },
+//   "leavers": {
+//     "4": true,
+//     "7": true
 //   }
 // }
 
@@ -78,7 +93,7 @@ async function asparsMapSetStats() {
 
   do {
 
-    let link = await maps.find({pars: 0});
+    let link = await maps.find({pars: 1});
     for (const l of link) {
       let li = l
 
@@ -110,7 +125,10 @@ async function asparsMapSetStats() {
 
       if (li && state && state.playerToName && state.flags) {
 
-        if (state.flags.length < 7) {
+        let len =  Object.keys(state.flags).length;
+        console.log('state'+ len)
+
+        if (len < 8) {
           let data = {
             pars: 1,
             errorType: 'flagsCount'
@@ -174,11 +192,12 @@ async function asparsMapSetStats() {
             switch (state.flags[key]) {
               case "winner" :
                 let plw = getPlayers(state.playerToName[key])
-                // console.log(plw)
+
                 winner.push({
                   'nick': plw.nick,
                   'PTS': 0,
-                  'prevPTS': plw.PTS
+                  'prevPTS': plw.PTS,
+                  'color': getClassColorByPlayer(key*1)
                 })
                 wt.push(ranking.makePlayer(plw.PTS, 300))
                 break
@@ -188,7 +207,8 @@ async function asparsMapSetStats() {
                 loser.push({
                   'nick': pll.nick,
                   'PTS': 0,
-                  'prevPTS': pll.PTS
+                  'prevPTS': pll.PTS,
+                  'color': getClassColorByPlayer(key*1)
                 })
                 lt.push(ranking.makePlayer(pll.PTS, 72))
                 break
@@ -198,7 +218,8 @@ async function asparsMapSetStats() {
             rmk.push({
               'nick': plrmk.nick,
               'PTS': plrmk.PTS,
-              'prevPTS': plrmk.PTS
+              'prevPTS': plrmk.PTS,
+              'color': getClassColorByPlayer(key*1)
             })
           }
         }
@@ -470,6 +491,7 @@ function getStats(file) {
 
   return state
 }
+
 
 
 router.post("/game", async (req, res) => {
