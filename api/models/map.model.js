@@ -38,6 +38,14 @@ const mapsSchema = new Schema({
     type: Array,
     default: undefined
   },
+  players:{
+    type: Array,
+    default: undefined
+  },
+  chat:{
+    type: Array,
+    default: undefined
+  },
   leavers:{
     type: Array,
     default: undefined
