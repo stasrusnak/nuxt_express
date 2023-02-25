@@ -25,28 +25,24 @@ mongoose.connect(config+'?authSource=admin', {
 // Test route
 router.use('/replays', async (req, res) => {
 
-  // const records = await maps.find().exec();
   const records = await maps.find({}, {
     'idrep': 1,
     'time': 1,
     'date': 1,
     'link': 1,
-    'players': 1
-  }).exec();
-
-  // db.col.find({}, {'books.year': 1})
-
-
+    'players': 1,
+  }).sort( { "idrep": -1 } ).exec();
 
   res.status(201).send(records);
 
 })
 
 
-router.use('/userarchive', async (req, res) => {
+router.use('/replaysarchive', async (req, res) => {
 
-  const reqq = req.body.nick
-  const records = await user.find().where('nick').in(reqq).exec();
+  const reqq = req.body.link
+
+  const records = await maps.find().where('link').in(reqq).exec();
 
 
   res.status(201).send(records);

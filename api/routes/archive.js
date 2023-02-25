@@ -28,8 +28,14 @@ router.use('/archive', async (req, res) => {
   const reqq = req.body.maps
   const records = await maps.find().where('_id').in(reqq).exec();
 
+  // if ( records.length < 0 ) {
+  //   res.status(201).send(records);
+  // } else {
+  //   res.sendStatus(404)
+  // }
 
   res.status(201).send(records);
+
 
 })
 

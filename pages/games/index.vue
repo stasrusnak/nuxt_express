@@ -63,7 +63,7 @@ export default {
     this.obj = this.$route.params.obj
 
     // this.nick = this.$route.params.obj.nick
-    console.log( this.obj )
+    // console.log( this.obj )
   },
   head () {
     return {

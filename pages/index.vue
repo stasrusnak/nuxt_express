@@ -23,6 +23,11 @@
           T
         </a>
       </sui-menu-item>
+      <sui-menu-item>
+        <a class="button" href="/replays">
+          Архив игр
+        </a>
+      </sui-menu-item>
     </sui-menu>
 
     <div class="container">
@@ -120,7 +125,7 @@
     },
     methods: {
       handleAction(action, payload) {
-        console.log(action, payload)
+        // console.log(action, payload)
         window.alert("check out the console to see the data logged");
       }
     }

@@ -9,6 +9,11 @@
           T
         </a>
       </sui-menu-item>
+      <sui-menu-item>
+        <a class="button" href="/">
+          Главная
+        </a>
+      </sui-menu-item>
     </sui-menu>
 
     <div class="container">
@@ -23,7 +28,7 @@
 </template>
 
 <script>
-  import ActionButtons from "./../components/ActionButtons";
+  import ActionReplayButtons from "./../components/ActionReplayButtons";
   import NickName from "./../components/nickName";
   import replayName from "./../components/replayName";
   import replayPlayers from "./../components/replayPlayers";
@@ -32,7 +37,7 @@
     async asyncData({$http}) {
       const replays = await $http.$get('/api/replays')
 
-      console.log(replays)
+      // console.log(replays)
       return {
         posts: replays,
       }
@@ -49,7 +54,7 @@
             {
               key: "idrep",
               title: "ID",
-              type: "number"
+              type: "number",
             },
             {
               key: "date",
@@ -93,11 +98,11 @@
             //   key: "rmk",
             //   title: "RMK"
             // },
-            // {
-            //   key: "INFO",
-            //   component: ActionButtons,
-            //   sortable:false
-            // }
+            {
+              key: "INFO",
+              component: ActionReplayButtons,
+              sortable:false
+            }
           ],
           text: {
             searchText:"Поиск",

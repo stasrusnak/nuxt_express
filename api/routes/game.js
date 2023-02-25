@@ -93,7 +93,7 @@ async function asparsMapSetStats() {
 
   do {
 
-    let link = await maps.find({pars: 1});
+    let link = await maps.find({pars: 0});
     for (const l of link) {
       let li = l
 
@@ -126,7 +126,7 @@ async function asparsMapSetStats() {
       if (li && state && state.playerToName && state.flags) {
 
         let len =  Object.keys(state.flags).length;
-        console.log('state'+ len)
+
 
         if (len < 8) {
           let data = {
