@@ -20,76 +20,65 @@
       <div class="profileBody">
 
         <div class="profileinfo">
-          <sui-card v-if="this.obj" >
+          <sui-card v-if="this.obj" class="userTop">
             <sui-card-content>
               <sui-card-header>
                 <NickName :data="{nick:this.nick}" />
               </sui-card-header>
             </sui-card-content>
-            <sui-card-content  >
+            <sui-card-content >
 
-              <h2 is="sui-header" icon text-align="center">
-                <div v-html="this.ava"></div>
-              </h2>
-              <div is="sui-divider" horizontal>
-                <h4 is="sui-header">
-                  <i class="bar chart icon"></i>
-                  Статистика
-                </h4>
+              <div class="userHead">
+                <h2 is="sui-header" icon text-align="center">
+                  <div v-html="this.ava"></div>
+                </h2>
+                <div is="sui-divider" horizontal>
+                  <h4 is="sui-header">
+                    <i class="bar chart icon"></i>
+                    Статистика
+                  </h4>
+                </div>
+              </div>
+              <div class="userFoot">
+
+
+                <table class="ui definition table userTable unstackable">
+                  <tbody >
+                  <tr>
+                    <td class="two  column">
+                      <sui-list-icon name="sort numeric up" />
+                      PTS</td>
+                    <td>{{obj.PTS}}</td>
+                  </tr>
+                  <tr>
+                    <td>  <sui-list-icon name="sort numeric down" /> Прошлый PTS</td>
+                    <td>{{obj.prevPTS}}</td>
+                  </tr>
+                  <tr>
+                    <td><sui-list-icon name="thumbs up outline" /> Побед</td>
+                    <td>{{obj.wins}}</td>
+                  </tr>
+                  <tr>
+                    <td><sui-list-icon name="thumbs down outline" /> Поражений</td>
+                    <td>{{obj.lose}}</td>
+                  </tr>
+                  <tr>
+                    <td><sui-list-icon name="wheelchair" /> Ливов</td>
+                    <td>{{obj.leavers}}</td>
+                  </tr>
+                  <tr>
+                    <td><sui-list-icon name="trophy" /> WinRate</td>
+                    <td>{{getWinrate(obj)}}</td>
+                  </tr>
+                  <tr>
+                    <td><sui-list-icon name="gamepad" /> Игр</td>
+                    <td>{{obj.wins + obj.lose}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
 
-              <table class="ui definition table">
-                <tbody>
-                <tr>
-                  <td class="two wide column">Size</td>
-                  <td>1" x 2"</td>
-                </tr>
-                <tr>
-                  <td>Weight</td>
-                  <td>6 ounces</td>
-                </tr>
-                <tr>
-                  <td>Color</td>
-                  <td>Yellowish</td>
-                </tr>
-                <tr>
-                  <td>Odor</td>
-                  <td>Not Much Usually</td>
-                </tr>
-                </tbody>
-              </table>
-              <sui-list>
 
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>PTS: {{obj.PTS}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>Прошлый PTS: {{obj.prevPTS}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>РАНГ: {{obj.rank}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>Побед: {{obj.wins}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>Поражений: {{obj.lose}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>Ливов: {{obj.leavers}}</sui-list-content>
-                </sui-list-item>
-                <sui-list-item>
-                  <sui-list-icon name="users" />
-                  <sui-list-content>RMK: {{obj.rmk}}</sui-list-content>
-                </sui-list-item>
-
-              </sui-list>
             </sui-card-content>
           </sui-card>
           <div v-else></div>
@@ -198,6 +187,13 @@ export default {
       this.$router.push({ path: `/replays/${link}` })
 
     },
+    getWinrate(obj){
+      let win = obj.wins
+      let lose = obj.lose
+      let games=  win + lose
+      let res = Math.round(100*(win/games) * 100) / 100;
+      return res+'%'
+    },
     getNameMap(name){
       return '[VanDarkholme] Legion TD x20 -prccah +'+name
     },
@@ -219,7 +215,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   margin: 0 auto;
   min-height: 92vh;
@@ -234,21 +230,46 @@ export default {
   margin: 0 auto;
   height: 90vh;
 }
-
+.profileinfo{
+  margin-right: 15px;
+}
 .profileBody{
   display: flex;
   flex-direction: row;
 }
+@media screen and (max-width: 767px) {
+  .userTable{
+    .ui.table{
+      display: revert !important;
+    }
+    tbody{
 
+      display: revert !important;
+    }
+  }
+}
 
 @media screen and (max-width: 1000px) {
   .tableContent{
     width: 93vw;
     height: 100%;
   }
+  .profileinfo{
+    margin-right: 0px;
+  }
   .profileBody{
     flex-direction: column;
   }
+  .userTable{
+    tbody{
+      display: revert !important;
+    }
+  }
+  .userTop{
+    width: 100%
+  }
+
 }
+
 
 </style>
