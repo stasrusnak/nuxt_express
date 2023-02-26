@@ -11,7 +11,7 @@
           <sui-table-header>
             <sui-table-row>
               <sui-table-header-cell>Проиграли</sui-table-header-cell>
-              <sui-table-header-cell>Выйрали</sui-table-header-cell>
+              <sui-table-header-cell>Выиграл</sui-table-header-cell>
               <sui-table-header-cell></sui-table-header-cell>
             </sui-table-row>
           </sui-table-header>

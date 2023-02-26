@@ -144,7 +144,7 @@
                     <sui-table-cell positive>{{log.PTS-log.prevPTS}}</sui-table-cell>
                     <sui-table-cell positive >
                       <sui-icon name="thumbs up outline" />
-                      Выйграл
+                      Выиграл
                     </sui-table-cell>
                     <sui-table-cell positive text-align="center">
                       <div v-show="isLeaver(log.nick,modelLog)">
