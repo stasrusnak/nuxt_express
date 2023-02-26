@@ -78,12 +78,7 @@
               </sui-table>
             </div>
 
-
-
-
       </sui-segment>
-
-
       <sui-segment raised class="tableContent" >
               <a is="sui-label" color="red" ribbon>
                 Game chat
@@ -97,15 +92,10 @@
               <div class="messageText">
                 <div class="message">{{item.text}}</div>
               </div>
-
             </div>
           </div>
         <div v-else></div>
-
       </sui-segment>
-
-
-
     </section>
   </div>
 
@@ -127,10 +117,7 @@ export default {
   }),
   async mounted(){
 
-
-
     this.link = this.$route.params.id
-
     this.maps = await axios.post('/api/replaysarchive', {link: this.link})
       .then(function (response) {
         return response.data[0]
@@ -166,9 +153,6 @@ export default {
         m = Math.floor(eventTime % 3600 / 60).toString().padStart(2,'0'),
         s = Math.floor(eventTime % 60).toString().padStart(2,'0');
       return  m + ':' + s;
-
-
-
     },
 
     toggle(log) {
@@ -182,11 +166,7 @@ export default {
       window.open('https://replays.irinabot.ru/94545/'+link,'_blank');
     },
     isLeaver(nick){
-
-
       return this.maps.leavers.includes(nick)
-
-
     },
     setColor(colour) {
       switch (colour) {
@@ -212,8 +192,6 @@ export default {
     }
 
   },
-
-
   head () {
     return {
       title:  'Реплей'
@@ -272,7 +250,6 @@ export default {
 }
 
 @media screen and (max-width: 800px) {
-
   .chatblock {
     font-size: 13px;
     padding-bottom: 10px;
@@ -280,9 +257,5 @@ export default {
   .messageText{
     font-size: 12px;
   }
-
 }
-
-
-
 </style>
