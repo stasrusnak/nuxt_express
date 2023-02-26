@@ -82,9 +82,8 @@ export default async () => {
       '@nuxt/http',
       'nuxt-basic-auth-module',
       'semantic-ui-vue/nuxt',
-      '@nuxtjs/color-mode'
+      '@nuxtjs/color-mode',
     ],
-
     /*
     ** Server Middleware
     */
@@ -110,7 +109,11 @@ export default async () => {
     ** Build configuration
     ** See https://nuxtjs.org/api/configuration-build/
     */
-    build: {}
+    build: {
+      transpile: [
+        'animal-avatar-generator'
+      ],
+    }
 
   };
 

@@ -39,7 +39,10 @@
                 <sui-table-body>
                   <sui-table-row v-for="(log, key) in this.maps.winners" :key="key">
                     <sui-table-cell positive>
-                      <NickName :data="{nick:log.nick}" />
+                      <div class="nickSlot">
+                        <sui-icon name="square" :color="log.color" size="large" />
+                        <NickName :data="{nick:log.nick}" />
+                      </div>
                     </sui-table-cell>
                     <sui-table-cell positive>{{log.PTS}}</sui-table-cell>
                     <sui-table-cell positive>{{log.PTS-log.prevPTS}}</sui-table-cell>
@@ -47,7 +50,7 @@
                       <sui-icon name="thumbs up outline" />
                       Выйграл
                     </sui-table-cell>
-                    <sui-table-cell positive text-align="center">
+                    <sui-table-cell positive  >
 <!--                      <div v-show="isLeaver(log.nick,modelLog)">-->
 <!--                        <sui-icon name="thumbs up outline" />-->
 <!--                      </div>-->
@@ -57,7 +60,10 @@
                 <sui-table-body v-if="this.maps.losers">
                   <sui-table-row v-for="(lo, k) in this.maps.losers" :data ="lo" :key="k">
                     <sui-table-cell negative>
-                      <NickName :data="{nick:lo.nick}" />
+                      <div class="nickSlot">
+                        <sui-icon name="square" :color="lo.color" size="large" />
+                        <NickName :data="{nick:lo.nick}" />
+                      </div>
                     </sui-table-cell>
                     <sui-table-cell negative> {{lo.PTS}}</sui-table-cell>
                     <sui-table-cell negative>{{lo.PTS-lo.prevPTS}}</sui-table-cell>
@@ -65,7 +71,7 @@
                       <sui-icon name="thumbs down outline" />
                       Проиграл
                     </sui-table-cell>
-                    <sui-table-cell negative text-align="center">
+                    <sui-table-cell negative  >
                       <div v-show="isLeaver(lo.nick )">
                         <sui-icon name="wheelchair" />
                       </div>
@@ -87,9 +93,14 @@
               </a>
             <div v-if="this.maps.chat">
             <div class="chatblock" v-for="(item, index) in this.maps.chat" :key="index" >
-              <div class="time">{{getDate(item.time)}}</div>
-              <div class="nick" :style="`color:${item.color}`">{{item.nick!=="" ? item.nick : "IRINA BOT"}}</div>
-              <div class="message">{{item.text}}</div>
+              <div class="infoText">
+                <div class="time">{{getDate(item.time)}}</div>
+                <div class="nick" :style="`color:${item.color}`">{{item.nick!=="" ? item.nick : "IRINA BOT"}}</div>
+              </div>
+              <div class="messageText">
+                <div class="message">{{item.text}}</div>
+              </div>
+
             </div>
           </div>
         <div v-else></div>
@@ -224,6 +235,10 @@ export default {
   text-align: center;
   flex-direction: column;
 }
+.nickSlot{
+  display: flex;
+  text-align: center;
+}
 
 .chatblock{
   display: flex;
@@ -231,6 +246,9 @@ export default {
   div{
     padding-right: 7px;
   }
+}
+.infoText{
+  display: flex;
 }
 
 .tableContent{
@@ -243,7 +261,7 @@ export default {
   margin-top: -17px;
   width: 150px;
 }
-.ui.blue.label, .ui.blue.labels .label {
+.ui.blue.ribbon.label  {
   border-color: #2185d0!important;
   display: flex;
   margin-top: -17px;
@@ -255,5 +273,19 @@ export default {
     width: 90vw;
   }
 }
+
+@media screen and (max-width: 800px) {
+
+  .chatblock {
+    font-size: 13px;
+    padding-bottom: 10px;
+  }
+  .messageText{
+    font-size: 12px;
+  }
+
+}
+
+
 
 </style>
