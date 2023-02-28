@@ -148,11 +148,29 @@ export default {
       // ":"+dateFormat.getMilliseconds()
 
       // eventTime = new Date(eventTime*1000).toUTCString().split(/ /)[4].split(':')
+      // eventTime = 300002
+
 
       const
+        h = Math.floor(eventTime / 3600).toString().padStart(2,'0'),
         m = Math.floor(eventTime % 3600 / 60).toString().padStart(2,'0'),
         s = Math.floor(eventTime % 60).toString().padStart(2,'0');
-      return  m + ':' + s;
+
+
+      let res =  m + ':' + s;
+      if(h !== '00'){
+        console.log(h)
+        res =  h + ':' + m + ':' + s;
+      }
+
+
+
+      // if(h !== '00'){
+      //   let res =  h + ':' + m + ':' + s;
+      // }else {
+      //   let res =  m + ':' + s;
+      // }
+      return res
     },
 
     toggle(log) {

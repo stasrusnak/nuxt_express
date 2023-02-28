@@ -122,7 +122,7 @@
 
 
                   </sui-table-cell>
-                  <sui-table-cell>{{item.time}} </sui-table-cell>
+                  <sui-table-cell>{{getHumanTime(item.time)}} </sui-table-cell>
                 </sui-table-row>
               </sui-table-body>
             </sui-table>
@@ -188,7 +188,6 @@ export default {
     let val = this.maps[keys[0]]
      val.players.forEach(e =>{
        if(e.playerName === this.nick){
-         console.log(e.playerName)
          this.idConnect = e.id
        }
      })
@@ -205,9 +204,28 @@ export default {
 
     toggle(item) {
       let link = item.link
-      console.log(link)
       this.$router.push({ path: `/replays/${link}` })
 
+    },
+    getHumanTime(time){
+      let min = time[0]+time[1]
+      let sek = time[3]+time[4]
+      let TimeConvert = 0
+      if(min !== '00'){
+        TimeConvert = (min * 60)
+        TimeConvert = TimeConvert+ sek*1
+        const
+          h = Math.floor(TimeConvert / 3600).toString().padStart(2,'0'),
+          m = Math.floor(TimeConvert % 3600 / 60).toString().padStart(2,'0'),
+          s = Math.floor(TimeConvert % 60).toString().padStart(2,'0');
+        let res =  m + ':' + s;
+        if(h !== '00'){
+          res =  h + ':' + m + ':' + s;
+        }
+        return res
+      }else {
+        return time
+      }
     },
     getWinrate(obj){
       let win = obj.wins
