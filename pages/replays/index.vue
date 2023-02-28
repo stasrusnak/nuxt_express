@@ -106,7 +106,7 @@
           ],
           text: {
             searchText:"Поиск",
-            perPageText:"Количество :entries",
+            perPageText:"Кол-во :entries",
             infoText: "Отображение :first - :last из :total пользователей",
             emptyTableText: "Пользователи не найдены :(",
             infoFilteredText: "Показаны :first - :last из :filtered (отфильтровано из :total записей)",

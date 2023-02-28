@@ -74,6 +74,10 @@
                     <td><sui-list-icon name="gamepad" /> Игр</td>
                     <td>{{obj.wins + obj.lose}}</td>
                   </tr>
+                  <tr v-model="idConnect">
+                    <td><sui-list-icon name="plug" /> Connector</td>
+                    <td>#{{idConnect}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -85,15 +89,14 @@
         </div>
 
         <div class="profileGams">
-          <div class="tableContent"  v-show="this.maps" >
-
-
+          <div class="tableContent"  v-if="this.maps" >
             <sui-table single-line>
               <sui-table-header>
                 <sui-table-row>
                   <sui-table-header-cell>Номер игры</sui-table-header-cell>
                   <sui-table-header-cell>Дата</sui-table-header-cell>
                   <sui-table-header-cell>Название</sui-table-header-cell>
+                  <sui-table-header-cell>Луз</sui-table-header-cell>
                   <sui-table-header-cell>Длительность</sui-table-header-cell>
                 </sui-table-row>
               </sui-table-header>
@@ -107,10 +110,30 @@
                     <sui-list-icon name="download" link size="large" v-on:click="downloadRep(item.link)" >
                     </sui-list-icon>
                   </sui-table-cell>
+
+                  <sui-table-cell>
+
+                    <div v-if="getResult(item)">
+                      <sui-list-icon name="frown outline"  size="large">
+                      </sui-list-icon>
+                    </div>
+                    <div v-else>
+                    </div>
+
+
+                  </sui-table-cell>
                   <sui-table-cell>{{item.time}} </sui-table-cell>
                 </sui-table-row>
               </sui-table-body>
             </sui-table>
+          </div>
+          <div class="tableContent loader" v-else >
+            <sui-segment>
+              <sui-dimmer active inverted>
+                <sui-loader content="Loading..." />
+              </sui-dimmer>
+
+            </sui-segment>
           </div>
 
         </div>
@@ -141,16 +164,14 @@ export default {
     open: false,
     modelLog: null,
     ava : null,
+    idConnect : null,
     html: "",
   }),
 
 
   async beforeMount(){
 
-
     this.nick = this.$route.params.id
-
-
     this.obj = await axios.post('/api/userarchive', {nick: this.nick})
       .then(function (response) {
         return response.data[0]
@@ -159,22 +180,23 @@ export default {
 
     this.maps = await axios.post('/api/archive', {maps: this.obj.idreps})
       .then(function (response) {
-
-
-        return response.data
+        return response.data.reverse()
       })
       .catch(function (error) {console.log(error);});
 
-
-
-
-
+    let keys = Object.keys(this.maps );
+    let val = this.maps[keys[0]]
+     val.players.forEach(e =>{
+       if(e.playerName === this.nick){
+         console.log(e.playerName)
+         this.idConnect = e.id
+       }
+     })
   },
   async mounted(){
-
     // const svg = avatar('your custom seed', { size: 200 })
     this.ava =   avatar(this.nick, { size: 200 })
-
+    console.log(  this.maps )
   },
   components: {
     NickName
@@ -193,6 +215,23 @@ export default {
       let games=  win + lose
       let res = Math.round(100*(win/games) * 100) / 100;
       return res+'%'
+    },
+     getResult(repl){
+      let res = false;
+       // res = repl.leavers.includes(this.nick)
+       repl.losers.forEach((e)=>{
+         if(e.nick === this.nick){
+           res = true
+         }
+       })
+       repl.players.forEach((e)=>{
+         if(e.nick === this.nick){
+           console.log(e)
+           this.idConnect = e.id
+         }
+       })
+
+      return res
     },
     getNameMap(name){
       return '[VanDarkholme] Legion TD x20 -prccah +'+name
@@ -216,6 +255,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loader{
+  .ui.segment{
+    height: 90vh;
+  }
+}
+
 .container {
   margin: 0 auto;
   min-height: 92vh;
