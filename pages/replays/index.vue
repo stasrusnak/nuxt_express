@@ -36,8 +36,6 @@
   export default {
     async asyncData({$http}) {
       const replays = await $http.$get('/api/replays')
-
-      console.log(replays)
       return {
         posts: replays,
       }

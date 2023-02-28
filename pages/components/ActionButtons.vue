@@ -1,12 +1,17 @@
 <template>
-    <div class="action-buttons">
+  <div class="action-buttons">
 
-        <button class="btn btn-outline-success" @click="handleAction(data)">
+    <button class="btn btn-outline-success" @click="handleAction(data)">
 
-            <sui-icon name="users" bordered  ></sui-icon>
+      <div v-if="$colorMode.preference === 'dark'">
+        <sui-icon name="gamepad"  bordered   color="green"></sui-icon>
+      </div>
+      <div v-else>
+        <sui-icon name="gamepad" bordered></sui-icon>
+      </div>
 
-        </button>
-    </div>
+    </button>
+  </div>
 </template>
 <script>
   export default {
@@ -17,6 +22,7 @@
     },
 
     methods: {
+
       handleAction(actionName) {
 
         // this.$router.push({
@@ -28,7 +34,7 @@
 
 
         let nick = actionName.nick
-        this.$router.push({ path: `/users/${nick}` })
+        this.$router.push({path: `/users/${nick}`})
 
       }
     },

@@ -30,6 +30,8 @@
       </sui-menu-item>
     </sui-menu>
 
+    <ColorModePicker />
+
     <div class="container">
       <div >
         <data-table v-bind="parameters"/>
@@ -44,6 +46,7 @@
 <script>
   import ActionButtons from "./components/ActionButtons";
   import NickName from "./components/nickName";
+  import ColorModePicker from './components/ColorModePicker'
 
   export default {
     async asyncData({$http}) {
@@ -51,6 +54,9 @@
       return {
         posts: posts,
       }
+    },
+    components: {
+      ColorModePicker
     },
     computed: {
       parameters() {
@@ -99,7 +105,7 @@
             },
             {
               key: "winRate",
-              title: "WinRate %",
+              title: "WinRate",
               type: "number"
             },
             {

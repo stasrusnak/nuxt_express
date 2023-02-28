@@ -24,7 +24,6 @@
       handleAction(actionName) {
 
         let link = actionName.link
-        console.log(link)
         this.$router.push({ path: `/replays/${link}` })
 
       }

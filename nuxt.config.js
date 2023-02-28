@@ -26,14 +26,14 @@ export default async () => {
     ** See https://nuxtjs.org/api/configuration-head
     */
     head: {
-      title: process.env.npm_package_name || '',
+      title: 'LTD Stats',
       meta: [
         {charset: 'utf-8'},
         {name: 'viewport', content: 'width=device-width, initial-scale=1'},
         {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
       ],
       link: [
-        {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
       ]
     },
 
@@ -71,7 +71,8 @@ export default async () => {
     */
     buildModules: [
       // Doc: https://github.com/nuxt-community/eslint-module
-      '@nuxtjs/dotenv'
+      '@nuxtjs/dotenv',
+      '@nuxtjs/color-mode'
     ],
 
     /*
@@ -82,7 +83,6 @@ export default async () => {
       '@nuxt/http',
       'nuxt-basic-auth-module',
       'semantic-ui-vue/nuxt',
-      '@nuxtjs/color-mode',
     ],
     /*
     ** Server Middleware
@@ -102,7 +102,7 @@ export default async () => {
     /* For deployment you might want to edit host and port
     */
       server: {
-        port: 10001,     // default : 3000
+        port: 3000,     // default : 3000 10001
         host: '0.0.0.0' // do not put localhost (only accessible from the host machine)
       },
     /*

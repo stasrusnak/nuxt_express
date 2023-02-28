@@ -22,8 +22,10 @@
         <div class="profileinfo">
           <sui-card v-if="this.obj" class="userTop">
             <sui-card-content>
-              <sui-card-header>
-                <NickName :data="{nick:this.nick}" />
+              <sui-card-header >
+                <div class="playername">
+                  <NickName :data="{nick:this.nick}" />
+                </div>
               </sui-card-header>
             </sui-card-content>
             <sui-card-content >
@@ -33,7 +35,7 @@
                   <div v-html="this.ava"></div>
                 </h2>
                 <div is="sui-divider" horizontal>
-                  <h4 is="sui-header">
+                  <h4 is="sui-header" class="statsHeader">
                     <i class="bar chart icon"></i>
                     Статистика
                   </h4>
@@ -42,40 +44,40 @@
               <div class="userFoot">
 
 
-                <table class="ui definition table userTable unstackable">
+                <table class="ui definition table userTable unstackable ">
                   <tbody >
                   <tr>
-                    <td class="two  column">
+                    <td class="two  column statsHeader" >
                       <sui-list-icon name="sort numeric up" />
                       PTS</td>
                     <td>{{obj.PTS}}</td>
                   </tr>
-                  <tr>
-                    <td>  <sui-list-icon name="sort numeric down" /> Прошлый PTS</td>
-                    <td>{{obj.prevPTS}}</td>
+                  <tr >
+                    <td class="statsHeader">  <sui-list-icon name="sort numeric down" /> Прошлый PTS</td>
+                    <td  >{{obj.prevPTS}}</td>
                   </tr>
                   <tr>
-                    <td><sui-list-icon name="thumbs up outline" /> Побед</td>
+                    <td class="statsHeader"><sui-list-icon name="thumbs up outline" /> Побед</td>
                     <td>{{obj.wins}}</td>
                   </tr>
                   <tr>
-                    <td><sui-list-icon name="thumbs down outline" /> Поражений</td>
+                    <td class="statsHeader"><sui-list-icon name="thumbs down outline" /> Поражений</td>
                     <td>{{obj.lose}}</td>
                   </tr>
                   <tr>
-                    <td><sui-list-icon name="wheelchair" /> Ливов</td>
+                    <td class="statsHeader"><sui-list-icon name="wheelchair" /> Ливов</td>
                     <td>{{obj.leavers}}</td>
                   </tr>
                   <tr>
-                    <td><sui-list-icon name="trophy" /> WinRate</td>
+                    <td class="statsHeader"><sui-list-icon name="trophy" /> WinRate</td>
                     <td>{{getWinrate(obj)}}</td>
                   </tr>
                   <tr>
-                    <td><sui-list-icon name="gamepad" /> Игр</td>
+                    <td class="statsHeader"><sui-list-icon name="gamepad" /> Игр</td>
                     <td>{{obj.wins + obj.lose}}</td>
                   </tr>
                   <tr v-model="idConnect">
-                    <td><sui-list-icon name="plug" /> Connector</td>
+                    <td class="statsHeader"><sui-list-icon name="plug" /> Connector</td>
                     <td>#{{idConnect}}</td>
                   </tr>
                   </tbody>
@@ -128,12 +130,22 @@
             </sui-table>
           </div>
           <div class="tableContent loader" v-else >
-            <sui-segment>
-              <sui-dimmer active inverted>
-                <sui-loader content="Loading..." />
-              </sui-dimmer>
 
-            </sui-segment>
+            <div v-if="$colorMode.preference==='dark'">
+              <sui-segment>
+                <sui-dimmer active >
+                  <sui-loader content="Loading..." />
+                </sui-dimmer>
+              </sui-segment>
+            </div>
+            <div v-else>
+              <sui-segment>
+                <sui-dimmer active inverted>
+                  <sui-loader content="Loading..." />
+                </sui-dimmer>
+              </sui-segment>
+            </div>
+
           </div>
 
         </div>
@@ -193,9 +205,7 @@ export default {
      })
   },
   async mounted(){
-    // const svg = avatar('your custom seed', { size: 200 })
-    this.ava =   avatar(this.nick, { size: 200 })
-    console.log(  this.maps )
+    this.ava = avatar(this.nick, { size: 200 })
   },
   components: {
     NickName
@@ -277,6 +287,10 @@ export default {
   .ui.segment{
     height: 90vh;
   }
+}
+.playername{
+  display: flex;
+  justify-content: center;
 }
 
 .container {

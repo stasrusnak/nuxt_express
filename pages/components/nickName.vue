@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="display:flex;" v-html="html" v-if="html" :key="this.data.nick"/>
+        <div style="display:flex;" v-html="html" v-if="html" :key="this.data.nick" class="playername"/>
         <span v-else>{{this.data.nick}}</span>
     </div>
 </template>
@@ -55,3 +55,9 @@
     },
   };
 </script>
+
+
+<style scoped lang="scss">
+
+
+</style>

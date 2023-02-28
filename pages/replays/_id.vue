@@ -18,10 +18,43 @@
 
     <section class="container" v-if="this.maps">
 
+      <sui-segment raised  v-if="this.maps.winners" class="tableContent" >
+        <a is="sui-label" color="teal" ribbon>
+          Игра
+        </a>
 
+        <div   >
+          <sui-table single-line>
+            <sui-table-header>
+              <sui-table-row>
+                <sui-table-header-cell>Номер игры</sui-table-header-cell>
+                <sui-table-header-cell>Дата</sui-table-header-cell>
+                <sui-table-header-cell>Название</sui-table-header-cell>
+                <sui-table-header-cell>Длительность</sui-table-header-cell>
+              </sui-table-row>
+            </sui-table-header>
+
+            <sui-table-body >
+              <sui-table-row>
+                <sui-table-cell>№  {{this.maps.idrep}}</sui-table-cell>
+                <sui-table-cell>{{this.maps.date}}</sui-table-cell>
+                <sui-table-cell>
+                  <a is="sui-list-header" >{{getNameMap(this.maps.idrep)}}</a>
+                    <sui-list-icon name="download" @click="download"  link size="large">
+                    </sui-list-icon>
+                </sui-table-cell>
+
+                <sui-table-cell>{{getHumanTime(this.maps.time)}} </sui-table-cell>
+              </sui-table-row>
+            </sui-table-body>
+          </sui-table>
+
+        </div>
+
+      </sui-segment>
       <sui-segment raised  v-if="this.maps.winners" class="tableContent" >
         <a is="sui-label" color="blue" ribbon>
-          Game
+          Команды
         </a>
             <!--            style="width: 100%; overflow-y: auto; margin: 0 auto"-->
             <div   >
@@ -37,15 +70,18 @@
                   </sui-table-row>
                 </sui-table-header>
                 <sui-table-body>
-                  <sui-table-row v-for="(log, key) in this.maps.winners" :key="key">
+                  <sui-table-row v-for="(logg, key) in this.maps.winners" :key="key">
                     <sui-table-cell positive>
                       <div class="nickSlot">
-                        <sui-icon name="square" :color="log.color" size="large" />
-                        <NickName :data="{nick:log.nick}" />
+                        <sui-icon name="square" :color="logg.color" size="large" />
+                        <div class="nickLink"  @click="gotoProfile(logg.nick)" >
+                          <NickName :data="{nick:logg.nick}" />
+                        </div>
+
                       </div>
                     </sui-table-cell>
-                    <sui-table-cell positive>{{log.PTS}}</sui-table-cell>
-                    <sui-table-cell positive>{{log.PTS-log.prevPTS}}</sui-table-cell>
+                    <sui-table-cell positive>{{logg.PTS}}</sui-table-cell>
+                    <sui-table-cell positive>{{logg.PTS-logg.prevPTS}}</sui-table-cell>
                     <sui-table-cell positive >
                       <sui-icon name="thumbs up outline" />
                       Выиграл
@@ -59,7 +95,10 @@
                     <sui-table-cell negative>
                       <div class="nickSlot">
                         <sui-icon name="square" :color="lo.color" size="large" />
-                        <NickName :data="{nick:lo.nick}" />
+                        <div class="nickLink"  @click="gotoProfile(lo.nick)" >
+                          <NickName :data="{nick:lo.nick}" />
+                        </div>
+
                       </div>
                     </sui-table-cell>
                     <sui-table-cell negative> {{lo.PTS}}</sui-table-cell>
@@ -81,16 +120,16 @@
       </sui-segment>
       <sui-segment raised class="tableContent" >
               <a is="sui-label" color="red" ribbon>
-                Game chat
+               Игровой чат
               </a>
             <div v-if="this.maps.chat">
-            <div class="chatblock" v-for="(item, index) in this.maps.chat" :key="index" >
+            <div class="chatblock" v-for="(ite, index) in this.maps.chat" :key="index" >
               <div class="infoText">
-                <div class="time">{{getDate(item.time)}}</div>
-                <div class="nick" :style="`color:${item.color}`">{{item.nick!=="" ? item.nick : "IRINA BOT"}}</div>
+                <div class="time">{{getDate(ite.time)}}</div>
+                <div class="nick" :style="`color:${ite.color}`">{{ite.nick!=="" ? ite.nick : "IRINA BOT"}}</div>
               </div>
               <div class="messageText">
-                <div class="message">{{item.text}}</div>
+                <div class="message">{{ite.text}}</div>
               </div>
             </div>
           </div>
@@ -116,73 +155,67 @@ export default {
     html: "",
   }),
   async mounted(){
-
     this.link = this.$route.params.id
     this.maps = await axios.post('/api/replaysarchive', {link: this.link})
       .then(function (response) {
         return response.data[0]
       })
       .catch(function (error) {console.log(error);});
-
-
   },
   components: {
     NickName
   },
   methods:{
+    download(){
+
+      console.log(this.maps.link)
+      window.open('https://replays.irinabot.ru/94545/'+this.maps.link,'_blank');
+    },
     getDate(date){
-
       let start = this.maps.chat[0].time
-     let eventTime = date - start
-      // prettyMs
-      // var timeStamp= date
-      // var dateFormat = new Date(timeStamp);
-      //
-      // let time =
-      // //   dateFormat.getDate()+
-      // // "/"+(dateFormat.getMonth()+1)+
-      // // "/"+dateFormat.getFullYear()+
-      // // " "+dateFormat.getHours()+
-      // // ":"+dateFormat.getMinutes()+
-      // // ":"+dateFormat.getSeconds()+
-      // ":"+dateFormat.getMilliseconds()
-
-      // eventTime = new Date(eventTime*1000).toUTCString().split(/ /)[4].split(':')
-      // eventTime = 300002
-
-
+      let eventTime = date - start
       const
         h = Math.floor(eventTime / 3600).toString().padStart(2,'0'),
         m = Math.floor(eventTime % 3600 / 60).toString().padStart(2,'0'),
         s = Math.floor(eventTime % 60).toString().padStart(2,'0');
-
-
       let res =  m + ':' + s;
       if(h !== '00'){
-        console.log(h)
         res =  h + ':' + m + ':' + s;
       }
-
-
-
-      // if(h !== '00'){
-      //   let res =  h + ':' + m + ':' + s;
-      // }else {
-      //   let res =  m + ':' + s;
-      // }
       return res
     },
+    getHumanTime(time){
+      let min = time[0]+time[1]
+      let sek = time[3]+time[4]
+      let TimeConvert = 0
+      if(min !== '00'){
+        TimeConvert = (min * 60)
+        TimeConvert = TimeConvert+ sek*1
+        const
+          h = Math.floor(TimeConvert / 3600).toString().padStart(2,'0'),
+          m = Math.floor(TimeConvert % 3600 / 60).toString().padStart(2,'0'),
+          s = Math.floor(TimeConvert % 60).toString().padStart(2,'0');
+        let res =  m + ':' + s;
+        if(h !== '00'){
+          res =  h + ':' + m + ':' + s;
+        }
+        return res
+      }else {
+        return time
+      }
+    },
 
+    getNameMap(name){
+      return '[VanDarkholme] Legion TD x20 -prccah +'+name
+    },
+    gotoProfile(nick){
+      this.$router.push({ path: `/users/${nick}` })
+    },
     toggle(log) {
       this.modelLog = log
       this.open = !this.open;
     },
-    getNameMap(name){
-      return '[VanDarkholme] Legion TD x20 -prccah +'+name
-    },
-    downloadRep(link){
-      window.open('https://replays.irinabot.ru/94545/'+link,'_blank');
-    },
+
     isLeaver(nick){
       return this.maps.leavers.includes(nick)
     },
@@ -219,6 +252,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+  .nickLink{
+    cursor: pointer;
+  }
+
 .container {
   margin: 0 auto;
   min-height: 92vh;
@@ -250,6 +288,12 @@ export default {
 
 .ui.red.ribbon.label {
   border-color: #b21e1e!important;
+  display: flex;
+  margin-top: -17px;
+  width: 150px;
+}
+  .ui.teal.ribbon.label {
+  border-color: #00b5ad!important;
   display: flex;
   margin-top: -17px;
   width: 150px;
