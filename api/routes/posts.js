@@ -18,6 +18,12 @@ router.get("/posts", async (req, res) => {
         rank++;
         doc.rank = rank;
         delete doc._id;
+
+      let win = doc.wins
+      let lose = doc.lose
+      let games=  win + lose
+      let res = Math.round(100*(win/games) * 100) / 100;
+      doc.winRate = res
         base.push(doc);
       })
     res.send(base);

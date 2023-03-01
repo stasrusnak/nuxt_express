@@ -20,21 +20,21 @@
       setColor(colour) {
         switch (colour) {
           case 'red':
-            return "rgb(255 90 90)";
+            return "rgb(255 90 90 / 61%)";
           case 'green':
-            return "rgb(126 237 126)";
+            return "rgb(126 237 126 / 61%)";
           case 'blue':
-            return "rgb(65 131 196)";
+            return "rgb(65 131 196 / 61%)";
           case 'orange':
-            return "rgb(255 196 87)";
+            return "rgb(255 196 87 / 61%)";
           case 'purple':
-            return "rgb(187 72 187)";
+            return "rgb(187 72 187 / 61%)";
           case 'yellow':
-            return "rgb(255 255 0)";
+            return "rgb(255 255 0 / 61%)";
           case 'pink':
-            return "rgb(255 188 200)";
+            return "rgb(255 188 200 / 61%)";
           case 'teal':
-            return "rgb(23 241 241)";
+            return "rgb(23 241 241 / 61%)";
           default:
             return "";
         }
@@ -62,6 +62,8 @@
       font-size: 14px;
       padding: 5px;
       color: #000000;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.03);
+      font-weight: 550;
     }
   }
 

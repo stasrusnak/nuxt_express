@@ -225,7 +225,7 @@
       },
 
       getNameMap(name) {
-        return '[VanDarkholme] Legion TD x20 -prccah +' + name
+        return '[VanDarkholme] LTD x20 -prccah +' + name
       },
       gotoProfile(nick) {
         this.$router.push({path: `/users/${nick}`})
@@ -346,10 +346,19 @@
     }
     .messageText {
       font-size: 12px;
+
     }
     .segment {
       border: 1px solid rgba(218, 218, 218, 0.3) !important;
     }
 
+  }
+  .messageText {
+    /*font-weight: 450;*/
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.03);*/
+  }
+  .nick{
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.23);
+    font-weight: 550;
   }
 </style>
