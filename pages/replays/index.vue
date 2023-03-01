@@ -14,6 +14,11 @@
           Главная
         </a>
       </sui-menu-item>
+      <sui-menu-item  >
+        <a class="button" @click="setColor">
+          <sui-icon :name="this.icon"  />
+        </a>
+      </sui-menu-item>
     </sui-menu>
 
     <div class="container">
@@ -38,6 +43,7 @@
       const replays = await $http.$get('/api/replays')
       return {
         posts: replays,
+        icon: 'moon'
       }
     },
     computed: {
@@ -119,6 +125,16 @@
       }
     },
     methods: {
+      setColor() {
+        let theme =   $nuxt.$colorMode.preference
+        if(theme === 'system' || theme === 'light'){
+          $nuxt.$colorMode.preference = 'dark'
+          this.icon = 'sun'
+        }else{
+          $nuxt.$colorMode.preference = 'light'
+          this.icon = 'moon'
+        }
+      },
       handleAction(action, payload) {
         console.log(action, payload)
         window.alert("check out the console to see the data logged");

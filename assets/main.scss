@@ -18,13 +18,27 @@
   --bg-secondary: #071521;
   --border-color: rgba(255, 255, 255, 0.3) !important;
 
+  a {
+    color: #41b38a;
+    cursor: pointer;
+    &:hover{
+      color: #dadada;
+    }
+  }
 
+
+  .frown, .users{
+    color: #41b38a;
+  }
+  .download{
+    color: rgb(42, 102, 158);
+  }
 
   .data-table-sorting-icons {
     display: none !important;
   }
   .ui.table thead th {
-    background: #131313;;
+    background: #131313;
     color: #dadada;
 
   }
@@ -38,7 +52,7 @@
     color: #bcbcbc;
   }
 
-  .ui.card, .ui.cards>.card  {
+  .ui.card, .ui.cards>.card {
     border: none;
     background: #343434;
     color: #bcbcbc;
@@ -48,6 +62,19 @@
     }
 
   }
+  .ui.segment {
+
+    background: #131313;
+    color: #bcbcbc;
+    box-shadow: none;
+    .content span{
+      color: #dadada;
+    }
+  }
+  .chatdark{
+    border: 1px solid rgba(218, 218, 218, 0.3) !important;
+  }
+
 
   .statsHeader{
     color: #dadada !important;
@@ -57,12 +84,7 @@
     background: #343434;
     color: #bcbcbc;
   }
-  tr {
-    &:hover {
-      color: #dadada !important;
-      background-color: rgba(255, 255, 255, 0.3) !important;
-    }
-  }
+
   .table td, .table th{
     border-top: 1px solid #dee2e61c;
   }
@@ -107,32 +129,72 @@
       background-color: rgba(255, 255, 255, 0.3) !important;
     }
   }
-
   .userTop{
     .content{
       background: #131313;
     }
   }
-}
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-  Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: var(--bg);
-  color: var(--color);
-  transition: background-color 0.3s;
-}
-a {
-  color: #41b38a;
-  cursor: pointer;
-  &:hover{
-    color: #d7f5f5;
+  .ui.table td.positive, .ui.table tr.positive {
+    background: #003828db!important;
+    color: #dadada!important;
+
   }
-}
 
-.main-menu {
-  border-radius: 0px !important;
-  /*font-size: 0.9rem !important;*/
+  .ui.table td.negative, .ui.table tr.negative {
+    background: #bb3b3ba6!important;
+    color: #dadada!important;
+
+  }
+
+
+  @media screen and (max-width: 767px) {
+   .ui.table  {
+      background: #343434;
+      color: #dadada;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+     }
+   }
+
+  .table tr{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background-color: #343434 !important;
+  }
+
+  .ui.inverted.menu {
+    border-bottom: 1px solid #ffffff0f;
+    margin-bottom: -1px;
+  }
+
+  tr {
+    &:hover {
+      color: #dadada !important;
+      background-color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+ }
+
+ body {
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+   Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   background-color: var(--bg);
+   color: var(--color);
+   transition: background-color 0.3s;
+ }
+
+ a {
+   color: #41b38a;
+   cursor: pointer;
+   &:hover{
+     color: #4a92c7;
+   }
+ }
+ .main-menu {
+   border-radius: 0px !important;
+   /*font-size: 0.9rem !important;*/
   height: 1px !important;
 }
 .grid_main{

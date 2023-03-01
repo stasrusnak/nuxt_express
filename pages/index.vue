@@ -28,9 +28,15 @@
           Архив игр
         </a>
       </sui-menu-item>
-    </sui-menu>
 
-    <ColorModePicker />
+      <sui-menu-item  >
+          <a class="button" @click="setColor">
+            <sui-icon :name="this.icon"  />
+          </a>
+      </sui-menu-item>
+
+
+    </sui-menu>
 
     <div class="container">
       <div >
@@ -46,17 +52,26 @@
 <script>
   import ActionButtons from "./components/ActionButtons";
   import NickName from "./components/nickName";
-  import ColorModePicker from './components/ColorModePicker'
 
   export default {
     async asyncData({$http}) {
       const posts = await $http.$get('/api/posts')
       return {
         posts: posts,
+        icon:'moon'
       }
     },
-    components: {
-      ColorModePicker
+    methods: {
+      setColor() {
+        let theme =   $nuxt.$colorMode.preference
+        if(theme === 'system' || theme === 'light'){
+          $nuxt.$colorMode.preference = 'dark'
+          this.icon = 'sun'
+        }else{
+          $nuxt.$colorMode.preference = 'light'
+          this.icon = 'moon'
+        }
+      }
     },
     computed: {
       parameters() {
@@ -128,12 +143,6 @@
             downloadButtonText: "Загрузить",
           }
         };
-      }
-    },
-    methods: {
-      handleAction(action, payload) {
-        // console.log(action, payload)
-        window.alert("check out the console to see the data logged");
       }
     }
 

@@ -14,6 +14,11 @@
           Главная
         </a>
       </sui-menu-item>
+      <sui-menu-item  >
+        <a class="button" @click="setColor">
+          <sui-icon :name="this.icon"  />
+        </a>
+      </sui-menu-item>
     </sui-menu>
 
     <section class="container">
@@ -116,13 +121,10 @@
                   <sui-table-cell>
 
                     <div v-if="getResult(item)">
-                      <sui-list-icon name="frown outline"  size="large">
+                      <sui-list-icon name="frown outline" size="large">
                       </sui-list-icon>
                     </div>
-                    <div v-else>
-                    </div>
-
-
+                    <div v-else></div>
                   </sui-table-cell>
                   <sui-table-cell>{{getHumanTime(item.time)}} </sui-table-cell>
                 </sui-table-row>
@@ -178,6 +180,7 @@ export default {
     ava : null,
     idConnect : null,
     html: "",
+    icon : 'moon'
   }),
 
 
@@ -261,6 +264,16 @@ export default {
 
       return res
     },
+    setColor() {
+      let theme =   $nuxt.$colorMode.preference
+      if(theme === 'system' || theme === 'light'){
+        $nuxt.$colorMode.preference = 'dark'
+        this.icon = 'sun'
+      }else{
+        $nuxt.$colorMode.preference = 'light'
+        this.icon = 'moon'
+      }
+    },
     getNameMap(name){
       return '[VanDarkholme] Legion TD x20 -prccah +'+name
     },
@@ -288,6 +301,7 @@ export default {
     height: 90vh;
   }
 }
+
 .playername{
   display: flex;
   justify-content: center;

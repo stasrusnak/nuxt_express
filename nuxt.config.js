@@ -88,7 +88,8 @@ export default async () => {
     ** Server Middleware
     */
     serverMiddleware: {
-      '/api': '~/api'
+      '/api': '~/api',
+      '/server-middleware': '~/server-middleware/check.js'
     },
 
 

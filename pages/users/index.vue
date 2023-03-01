@@ -14,6 +14,11 @@
           Главная
         </a>
       </sui-menu-item>
+      <sui-menu-item  >
+        <a class="button" @click="setColor">
+          <sui-icon :name="this.icon"  />
+        </a>
+      </sui-menu-item>
     </sui-menu>
 
     <section class="container">
@@ -90,10 +95,6 @@
           </sui-table>
         </div>
 
-
-<!--        <nuxt-link class="button" to="/">-->
-<!--          Главная-->
-<!--        </nuxt-link>-->
 
         <sui-modal v-model="open" v-if="modelLog">
           <sui-modal-header v-show="modelLog.idrep">{{getNameMap(modelLog.idrep)}}</sui-modal-header>
@@ -200,11 +201,22 @@
       open: false,
       modelLog: null,
       html: "",
+      icon : 'moon'
     }),
     components: {
       NickName
     },
     methods:{
+      setColor() {
+        let theme =   $nuxt.$colorMode.preference
+        if(theme === 'system' || theme === 'light'){
+          $nuxt.$colorMode.preference = 'dark'
+          this.icon = 'sun'
+        }else{
+          $nuxt.$colorMode.preference = 'light'
+          this.icon = 'moon'
+        }
+      },
       toggle(log) {
         this.modelLog = log
         this.open = !this.open;
