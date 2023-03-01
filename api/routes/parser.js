@@ -95,7 +95,7 @@ function startPars(datePars,iswork){
 
         console.log('New work')
         logs.push('New work')
-        await wait(30000)
+        await wait(20000)
       }while (work)
 
 

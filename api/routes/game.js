@@ -199,7 +199,7 @@ async function asparsMapSetStats() {
                   'prevPTS': plw.PTS,
                   'color': getClassColorByPlayer(key*1)
                 })
-                wt.push(ranking.makePlayer(plw.PTS, 300))
+                wt.push(ranking.makePlayer(plw.PTS, 500))
                 break
               case "loser" :
                 let pll = getPlayers(state.playerToName[key])
@@ -258,7 +258,7 @@ async function asparsMapSetStats() {
             let pl = getPlayers(l.nick)
 
             if (l.PTS === 0) {
-              pl.PTS = pl.PTS - 20
+              pl.PTS = pl.PTS - 15
               const index = loser.findIndex(item => item.nick === l.nick);
               if (index !== -1) {
                 loser[index].PTS = pl.PTS
@@ -324,11 +324,11 @@ async function asparsMapSetStats() {
         })
       }
 
-      await wait(1000)
+      await wait(700)
     }
 
     console.log('New task')
-    await wait(20000)
+    await wait(15000)
 
   } while (work)
 
