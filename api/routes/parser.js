@@ -9,11 +9,8 @@ mongoose.set('strictQuery', true);
 const { Router } = require('express')
 import {getClassColorByPlayer} from '../main/colorPiker'
 
-
 const router = Router()
-
 const wait = ms => new Promise(res => setTimeout(res, ms))
-
 
 function getTime(minutes){
   let times={}
@@ -48,10 +45,7 @@ function getTime(minutes){
 
 
 let nickBase = []
-
-
 let logs = []
-
 let work = false
 
 function startPars(datePars,iswork){
@@ -120,8 +114,6 @@ function startPars(datePars,iswork){
     let chat = []
     let gameColors = []
     let startgame = null
-
-
 
     //cut lobby
     for (let i = 0; i < text.length; i++) {
@@ -215,7 +207,6 @@ function startPars(datePars,iswork){
     // console.log(gameColors)
     // console.log(nickBase)
 
-
     //Set players color
     for (let i = 0; i < nickBase.length; i++) {
       let index = gameColors.indexOf(nickBase[i].pid+'');
@@ -223,7 +214,6 @@ function startPars(datePars,iswork){
         nickBase[i].color = getClassColorByPlayer(index)
       }
     }
-
     ///Game chat
     for (let i = startgame; i < text.length; i++) {
       let Player = getPlayerByPid(text[i].event.payload?.fromPID)
@@ -261,11 +251,6 @@ function startPars(datePars,iswork){
         console.log(err)
       });
   };
-
-
-
-
-
 
 
   const getRawData = (URL) => {

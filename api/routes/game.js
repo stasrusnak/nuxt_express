@@ -199,7 +199,7 @@ async function asparsMapSetStats() {
                   'prevPTS': plw.PTS,
                   'color': getClassColorByPlayer(key*1)
                 })
-                wt.push(ranking.makePlayer(plw.PTS, 500))
+                wt.push(ranking.makePlayer(plw.PTS, 350))
                 break
               case "loser" :
                 let pll = getPlayers(state.playerToName[key])
@@ -210,7 +210,7 @@ async function asparsMapSetStats() {
                   'prevPTS': pll.PTS,
                   'color': getClassColorByPlayer(key*1)
                 })
-                lt.push(ranking.makePlayer(pll.PTS, 72))
+                lt.push(ranking.makePlayer(pll.PTS, 82))
                 break
             }
           } else {
@@ -258,7 +258,7 @@ async function asparsMapSetStats() {
             let pl = getPlayers(l.nick)
 
             if (l.PTS === 0) {
-              pl.PTS = pl.PTS - 15
+              pl.PTS = pl.PTS - 24
               const index = loser.findIndex(item => item.nick === l.nick);
               if (index !== -1) {
                 loser[index].PTS = pl.PTS
