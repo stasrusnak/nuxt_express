@@ -81,7 +81,7 @@ function startPars(datePars,iswork){
               logs.push("save new rep link :"+ item.idrep);
             }
             if(!work) break;
-            await wait(500);
+            await wait(100);
           }
           console.log("done save links");
           logs.push("done save links");
@@ -89,7 +89,7 @@ function startPars(datePars,iswork){
 
         console.log('New work')
         logs.push('New work')
-        await wait(20000)
+        await wait(100)
       }while (work)
 
 

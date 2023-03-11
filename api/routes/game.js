@@ -324,11 +324,11 @@ async function asparsMapSetStats() {
         })
       }
 
-      await wait(700)
+      await wait(100)
     }
 
     console.log('New task')
-    await wait(15000)
+    await wait(100)
 
   } while (work)
 
