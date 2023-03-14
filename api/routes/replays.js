@@ -33,15 +33,15 @@ router.use('/replays', async (req, res) => {
   //   'players': 1,
   // }).sort( { "idrep": -1 } ).exec();
 
-  const records = await maps.find({}, {
+  let records = await maps.find({}, {
     'idrep': 1,
     'time': 1,
     'date': 1,
     'link': 1,
+    'names': 1,
     'players': 1,
     'date_insert':1
   }).sort( { "date_insert": -1 } ).exec();
-
 
   res.status(201).send(records);
 

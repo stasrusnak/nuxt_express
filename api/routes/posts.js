@@ -15,16 +15,17 @@ router.get("/posts", async (req, res) => {
    let rank = 0;
     postsbase = await posts.find().sort({"PTS": -1 }).toArray()
     postsbase.forEach(doc => {
-        rank++;
-        doc.rank = rank;
-        delete doc._id;
+      rank++;
+      doc.rank = rank;
+      delete doc._id;
 
       let win = doc.wins
       let lose = doc.lose
-      let games=  win + lose
+      let leavers = doc.leavers
+      let games=  win + lose + leavers
       let res = Math.round(100*(win/games) * 100) / 100;
       doc.winRate = res
-        base.push(doc);
+      base.push(doc);
       })
     res.send(base);
   }else {

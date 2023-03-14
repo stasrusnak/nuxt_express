@@ -41,6 +41,9 @@
   export default {
     async asyncData({$http}) {
       const replays = await $http.$get('/api/replays')
+      console.log(replays)
+
+
       return {
         posts: replays,
         icon: 'moon'
@@ -73,11 +76,18 @@
               searchable: true,
             },
             {
+              key: "names",
+              title: "Игроки",
+              type: "string",
+              searchable: true,
+            },
+            {
               key: "link",
               title: "Ник",
               component: replayName,
               type: "string"
             },
+
             // {
             //   key: "Games",
             //   title: "Игр",
@@ -126,7 +136,7 @@
     },
     methods: {
       setColor() {
-        let theme =   $nuxt.$colorMode.preference
+        let theme = $nuxt.$colorMode.preference
         if(theme === 'system' || theme === 'light'){
           $nuxt.$colorMode.preference = 'dark'
           this.icon = 'sun'
@@ -144,5 +154,15 @@
   }
 </script>
 
-<style src="../../assets/index.scss" lang="scss"></style>
+<style lang="scss">
+ td:nth-child(4) {
+  display: none;
+ }
+</style>
+
+<style src="../../assets/index.scss" lang="scss">
+
+
+
+</style>
 

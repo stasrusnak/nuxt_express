@@ -46,6 +46,10 @@ const mapsSchema = new Schema({
     type: Array,
     default: undefined
   },
+  names: {
+    type: String,
+    default: ''
+  },
   leavers:{
     type: Array,
     default: undefined

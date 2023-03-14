@@ -3,10 +3,8 @@
 
     <button class="btn btn-outline-success" @click="handleAction(data)">
 
-      <div v-if="$colorMode.preference === 'dark'">
-        <sui-icon name="gamepad"  bordered   color="green"></sui-icon>
-      </div>
-      <div v-else>
+
+      <div >
         <sui-icon name="gamepad" bordered></sui-icon>
       </div>
 

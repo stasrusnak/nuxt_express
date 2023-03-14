@@ -64,14 +64,18 @@ function startPars(datePars,iswork){
             if (logs.length > 10) logs = logs.slice(-10)
             console.log(item)
             logs.push(item);
-            let  resp = await maps.findOne({ idrep: item.idrep,
-              time: item.time});
+            let  resp = await maps.findOne({ idrep: item.idrep, time: item.time});
             if (!resp) {
               // let Maps = new maps(item)
               // await Maps.save()
 
               let chat = await getChat(item.link)
-              let val = {...item, 'chat': chat, 'players': nickBase,}
+
+              let names = ''
+              nickBase.forEach(e=>{ names += e.playerName+' '})
+              let val = {...item, 'chat': chat, 'players': nickBase, 'names':names}
+
+
               if (chat){
                 let Maps = new maps(val)
                 await Maps.save()
@@ -86,7 +90,6 @@ function startPars(datePars,iswork){
           console.log("done save links");
           logs.push("done save links");
         }
-
         console.log('New work')
         logs.push('New work')
         await wait(100)

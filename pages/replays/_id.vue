@@ -85,7 +85,7 @@
 
                   </div>
                 </sui-table-cell>
-                <sui-table-cell positive>{{logg.PTS}}</sui-table-cell>
+                <sui-table-cell positive>{{logg.prevPTS}}</sui-table-cell>
                 <sui-table-cell positive>{{logg.PTS-logg.prevPTS}}</sui-table-cell>
                 <sui-table-cell positive>
                   <sui-icon name="thumbs up outline"/>

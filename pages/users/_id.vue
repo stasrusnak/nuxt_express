@@ -78,8 +78,8 @@
                     <td>{{getWinrate(obj)}}</td>
                   </tr>
                   <tr>
-                    <td class="statsHeader"><sui-list-icon name="gamepad" /> Игр</td>
-                    <td>{{obj.wins + obj.lose}}</td>
+                    <td class="statsHeader"><sui-list-icon name="chess" /> Игр</td>
+                    <td>{{obj.wins + obj.lose + obj.leavers}}</td>
                   </tr>
                   <tr v-model="idConnect">
                     <td class="statsHeader"><sui-list-icon name="plug" /> Connector</td>
@@ -243,7 +243,8 @@ export default {
     getWinrate(obj){
       let win = obj.wins
       let lose = obj.lose
-      let games=  win + lose
+      let leavers = obj.leavers
+      let games=  win + lose + leavers
       let res = Math.round(100*(win/games) * 100) / 100;
       return res+'%'
     },
